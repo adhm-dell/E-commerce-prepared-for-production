@@ -16,10 +16,10 @@ class OrderStats extends BaseWidget
             Stat::make('Processing Orders', Order::statusFilter('processing')->count()),
             Stat::make('Shipped Orders', Order::statusFilter('shipped')->count()),
             Stat::make(
-                'Average Price',
-                'EGP ' . number_format((float) Order::query()->avg('grand_total'), 2)
+                'Total Revenue',
+                'EGP ' . number_format((float) Order::query()->sum('grand_total'), 2)
             )
-                ->description('Average order price')
+                ->description('Total Income')
                 ->color('success'),
         ];
     }
