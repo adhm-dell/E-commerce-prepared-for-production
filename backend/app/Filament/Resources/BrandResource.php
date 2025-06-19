@@ -55,6 +55,9 @@ class BrandResource extends Resource
                     Forms\Components\Toggle::make('is_active')
                         ->required()
                         ->default(true),
+                    Forms\Components\Toggle::make('is_featured')
+                        ->required()
+                        ->default(false),
 
                 ])
             ]);
@@ -70,6 +73,8 @@ class BrandResource extends Resource
                 Tables\Columns\TextColumn::make('slug')
                     ->searchable(),
                 Tables\Columns\IconColumn::make('is_active')
+                    ->boolean(),
+                Tables\Columns\IconColumn::make('is_featured')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
