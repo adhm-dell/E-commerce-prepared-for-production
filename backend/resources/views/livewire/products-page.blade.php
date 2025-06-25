@@ -1,12 +1,23 @@
 <div class="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">
     <section class="py-10 bg-gray-50 font-poppins dark:bg-gray-800 rounded-lg">
         <div class="px-4 py-4 mx-auto max-w-7xl lg:py-6 md:px-6">
-            <div class="flex flex-wrap mb-24 -mx-3">
-                <div class="w-full pr-2 lg:w-1/4 lg:block">
-                    <div class="p-4 mb-5 bg-white border border-gray-200 dark:border-gray-900 dark:bg-gray-900">
-                        <h2 class="text-2xl font-bold dark:text-gray-400"> Categories</h2>
+            <div class="flex flex-wrap  mb-24 -mx-3">
+                <div class="w-full sm:grid sm:grid-cols-2 sm:gap-2 pr-2 sm:px-2 lg:w-1/4 lg:block">
+                    <div x-data="{ open: false }"
+                        class="p-4 mb-5 sm:mb-2 bg-white border border-gray-200 dark:border-gray-900 dark:bg-gray-900">
+                        <h2 class="text-2xl font-bold dark:text-gray-400 flex justify-between items-center cursor-pointer lg:cursor-default"
+                            @click="open = !open">
+                            Categories
+                            <svg class="w-5 h-5 ml-2 lg:hidden transform transition-transform duration-300"
+                                :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </h2>
                         <div class="w-16 pb-2 mb-6 border-b border-rose-600 dark:border-gray-400"></div>
-                        <ul>
+
+                        {{-- Dropdown only collapses on small and medium screens --}}
+                        <ul x-show="open || window.innerWidth >= 1024" x-transition class="overflow-hidden lg:block">
                             @foreach ($categories as $category)
                                 <li wire:key="{{ $category->id }}" class="mb-4">
                                     <label for="{{ $category->slug }}" class="flex items-center dark:text-gray-400 ">
@@ -16,14 +27,25 @@
                                     </label>
                                 </li>
                             @endforeach
-
                         </ul>
-
                     </div>
-                    <div class="p-4 mb-5 bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-900">
-                        <h2 class="text-2xl font-bold dark:text-gray-400">Brand</h2>
+
+                    <div x-data="{ open: false }"
+                        class="p-4 mb-5 sm:mb-2 bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-900">
+                        <h2 class="text-2xl font-bold dark:text-gray-400 flex justify-between items-center cursor-pointer lg:cursor-default"
+                            @click="open = !open">
+                            Brand
+                            <svg class="w-5 h-5 ml-2 lg:hidden transform transition-transform duration-300"
+                                :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </h2>
+
                         <div class="w-16 pb-2 mb-6 border-b border-rose-600 dark:border-gray-400"></div>
-                        <ul>
+
+                        <ul x-show="open || window.innerWidth >= 1024" x-transition x-cloak
+                            class="overflow-hidden lg:block">
                             @foreach ($brands as $brand)
                                 <li wire:key="{{ $brand->id }}" class="mb-4">
                                     <label for="{{ $brand->slug }}" class="flex items-center dark:text-gray-300">
@@ -33,22 +55,35 @@
                                     </label>
                                 </li>
                             @endforeach
-
                         </ul>
                     </div>
-                    <div class="p-4 mb-5 bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-900">
-                        <h2 class="text-2xl font-bold dark:text-gray-400">Product Status</h2>
+
+
+                    <div x-data="{ open: false }"
+                        class="p-4 mb-5 bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-900">
+                        <h2 class="text-2xl font-bold dark:text-gray-400 flex justify-between items-center cursor-pointer lg:cursor-default"
+                            @click="open = !open">
+                            Product Status
+                            <svg class="w-5 h-5 ml-2 lg:hidden transform transition-transform duration-300"
+                                :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </h2>
+
                         <div class="w-16 pb-2 mb-6 border-b border-rose-600 dark:border-gray-400"></div>
-                        <ul>
+
+                        <ul x-show="open || window.innerWidth >= 1024" x-transition x-cloak
+                            class=" overflow-hidden lg:block">
                             <li class="mb-4">
-                                <label for="" class="flex items-center dark:text-gray-300">
+                                <label class="flex items-center dark:text-gray-300">
                                     <input wire:model.live="in_stock" value="1" type="checkbox"
                                         class="w-4 h-4 mr-2">
                                     <span class="text-lg dark:text-gray-400">In Stock</span>
                                 </label>
                             </li>
                             <li class="mb-4">
-                                <label for="" class="flex items-center dark:text-gray-300">
+                                <label class="flex items-center dark:text-gray-300">
                                     <input wire:model.live="on_sale" value="1" type="checkbox"
                                         class="w-4 h-4 mr-2">
                                     <span class="text-lg dark:text-gray-400">On Sale</span>
@@ -56,6 +91,7 @@
                             </li>
                         </ul>
                     </div>
+
 
                     <div class="p-4 mb-5 bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-900">
                         <h2 class="text-2xl font-bold dark:text-gray-400">Price</h2>
@@ -87,7 +123,7 @@
                 </div>
                 <div class="w-full px-3 lg:w-3/4">
                     <div class="px-3 mb-4">
-                        <div class="items-center justify-between hidden px-3 py-2 bg-gray-100 md:flex dark:bg-gray-900">
+                        <div class="items-center justify-between px-3 py-2 bg-gray-100 md:flex dark:bg-gray-900">
                             <div class="flex items-center justify-between">
                                 <select wire:model.live="sortBy"
                                     class="block w-40 text-base bg-gray-100 cursor-pointer dark:text-gray-400 dark:bg-gray-900">
