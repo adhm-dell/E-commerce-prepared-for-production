@@ -69,7 +69,7 @@
                             </svg>
                             <span class="mr-1">Cart</span>
                             <span
-                                class="py-0.5 px-1.5 rounded-full text-xs font-medium bg-blue-50 border border-blue-200 text-blue-600">4</span>
+                                class="py-0.5 px-1.5 rounded-full text-xs font-medium bg-blue-50 border border-blue-200 text-blue-600">{{ $total_count }}</span>
                         </a>
 
                         {{-- Login --}}

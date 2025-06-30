@@ -19,37 +19,86 @@ class CartManagement
                 $existing_item = $key;
                 break;
             }
+        }
 
-            if ($existing_item !== null) {
-                // If item exists, increment the quantity
-                $cart_items[$existing_item]['quantity'] += 1;
-                $cart_items[$existing_item]['total_amount'] = $cart_items[$existing_item]['quantity'] * $cart_items[$existing_item]['unit_amount'];
-            } else {
-                // If item does not exist, add it to the cart
-                $product = Product::where('id', $product_id)->first([
-                    'id',
-                    'name',
-                    'price',
-                    'image',
-                ]);
+        if ($existing_item !== null) {
+            // If item exists, increment the quantity
+            $cart_items[$existing_item]['quantity'] += 1;
+            $cart_items[$existing_item]['total_amount'] =
+                $cart_items[$existing_item]['quantity'] * $cart_items[$existing_item]['unit_amount'];
+        } else {
+            // If item does not exist, add it to the cart
+            $product = Product::where('id', $product_id)->first([
+                'id',
+                'name',
+                'price',
+                'image',
+            ]);
 
-                if ($product) {
-                    $cart_items[] = [
-                        'product_id' => $product->id,
-                        'name' => $product->name,
-                        'unit_amount' => $product->price,
-                        'image' => $product->image[0] ?? $product->name, // Assuming image is an array and we take the first image
-                        'quantity' => 1,
-                        'unit_amount' => $product->price, // Unit price
-                        'total_amount' => $product->price, // Initial total amount
-                    ];
-
-                    self::addCartItemstoCookie($cart_items);
-                    return count($cart_items); // Return the number of items in the cart
-                }
+            if ($product) {
+                $cart_items[] = [
+                    'product_id' => $product->id,
+                    'name' => $product->name,
+                    'unit_amount' => $product->price,
+                    'image' => $product->image[0] ?? $product->name, // Assuming image is array
+                    'quantity' => 1,
+                    'total_amount' => $product->price,
+                ];
             }
         }
+
+        // Save the updated cart to cookies
+        self::addCartItemstoCookie($cart_items);
+
+        return count($cart_items); // Return the number of items in the cart
     }
+
+    // add item to cart with quntity
+    static public function addItemToCartWithQty($product_id, $qty = 1)
+    {
+        $cart_items = self::getCartItems();
+        $existing_item = null;
+
+        // Check if the item already exists in the cart
+        foreach ($cart_items as $key => $item) {
+            if ($item['product_id'] == $product_id) {
+                $existing_item = $key;
+                break;
+            }
+        }
+
+        if ($existing_item !== null) {
+            // If item exists, increment the quantity
+            $cart_items[$existing_item]['quantity'] += $qty;
+            $cart_items[$existing_item]['total_amount'] =
+                $cart_items[$existing_item]['quantity'] * $cart_items[$existing_item]['unit_amount'];
+        } else {
+            // If item does not exist, add it to the cart
+            $product = Product::where('id', $product_id)->first([
+                'id',
+                'name',
+                'price',
+                'image',
+            ]);
+
+            if ($product) {
+                $cart_items[] = [
+                    'product_id' => $product->id,
+                    'name' => $product->name,
+                    'unit_amount' => $product->price,
+                    'image' => $product->image[0] ?? $product->name, // Assuming image is array
+                    'quantity' => $qty,
+                    'total_amount' => $product->price,
+                ];
+            }
+        }
+
+        // Save the updated cart to cookies
+        self::addCartItemstoCookie($cart_items);
+
+        return count($cart_items); // Return the number of items in the cart
+    }
+
 
     // remove item from cart
     static public function removeItemFromCart($product_id)
@@ -59,11 +108,18 @@ class CartManagement
         foreach ($cart_items as $key => $item) {
             if ($item['product_id'] == $product_id) {
                 unset($cart_items[$key]);
+                break;
             }
-            self::addCartItemstoCookie(array_values($cart_items)); // Re-index the array
-            return $cart_items; // Return the number of items left in the cart
         }
+
+        // Reindex the array to avoid issues with Livewire wire:key
+        $cart_items = array_values($cart_items);
+
+        self::addCartItemstoCookie($cart_items);
+
+        return $cart_items;
     }
+
 
     // add cart items to cookie
     static public function addCartItemstoCookie($cart_items)
@@ -108,15 +164,21 @@ class CartManagement
             if ($item['product_id'] == $product_id) {
                 if ($cart_items[$key]['quantity'] > 1) {
                     $cart_items[$key]['quantity'] -= 1;
+                    $cart_items[$key]['total_amount'] =
+                        $cart_items[$key]['quantity'] * $cart_items[$key]['unit_amount'];
                 } else {
                     unset($cart_items[$key]); // Remove item if quantity is 1
                 }
-                $cart_items[$key]['total_amount'] = $cart_items[$key]['quantity'] * $cart_items[$key]['unit_amount'];
+                break;
             }
         }
+
+        $cart_items = array_values($cart_items); // Reindex keys
         self::addCartItemstoCookie($cart_items);
-        return $cart_items; // Return updated cart items
+
+        return $cart_items;
     }
+
 
     // calculate total price of cart items
     static public function calculateTotalPrice($items)
