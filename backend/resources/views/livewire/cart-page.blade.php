@@ -84,9 +84,12 @@
                         <span class="font-semibold dark:text-white">{{ Number::currency($grand_total, 'EGP') }}</span>
                     </div>
                     @if ($cartItems)
-                        <button
-                            class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full dark:bg-blue-600 dark:hover:bg-blue-700">Checkout</button>
+                        <a href="{{ route('checkout') }}" wire:navigate
+                            class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full text-center block dark:bg-blue-600 dark:hover:bg-blue-700">
+                            Checkout
+                        </a>
                     @endif
+
                 </div>
             </div>
         </div>

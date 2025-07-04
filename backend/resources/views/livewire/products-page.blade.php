@@ -141,7 +141,7 @@
                                     <div class="relative bg-gray-200">
                                         <a href="/products/{{ $product->slug }}" class="">
                                             {{-- في bug هنا متنساش تعدلها --}}
-                                            <img src="{{ url('storage', $product->image) }}"
+                                            <img src="{{ url('storage', $product->image[0]) }}"
                                                 alt="{{ $product->name }}" class="object-cover w-full h-56 mx-auto ">
                                         </a>
                                     </div>

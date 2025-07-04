@@ -65,7 +65,7 @@ class ProductsPage extends Component
 
         LivewireAlert::title('Product Added to Cart Successfully!')
             ->success()
-            ->position('top-end')
+            ->position('bottom-end')
             ->toast(true)
             ->show();
     }
