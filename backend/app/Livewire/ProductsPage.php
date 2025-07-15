@@ -37,24 +37,35 @@ class ProductsPage extends Component
     #[Url]
     public $sortBy = 'latest';
 
+    public $step = 100;
+    public $adjustedMaxPrice = 10000;
+    public $adjustedMinPrice = 0;
+
 
     public function mount()
     {
+        $minProductPrice = Product::min('price') ?? 0;
+        $maxProductPrice = Product::max('price') ?? 0;
+
+        // Round them to the nearest step
+        $this->adjustedMinPrice = floor($minProductPrice / $this->step) * $this->step;
+        $this->adjustedMaxPrice = ceil($maxProductPrice / $this->step) * $this->step;
+        // Set price only if it's null (to respect filters from URL)
         if ($this->price === null) {
-            $this->price = Product::max('price') ?? 100000;
+            $this->price = $this->adjustedMaxPrice;
         }
     }
 
     #[Computed]
     public function minPrice(): float
     {
-        return Product::min('price') ?? 0;
+        return $this->adjustedMinPrice;
     }
 
     #[Computed]
     public function maxPrice(): float
     {
-        return Product::max('price') ?? 100000; // Fallback if no products
+        return $this->adjustedMaxPrice;
     }
 
     //add product to cart method
