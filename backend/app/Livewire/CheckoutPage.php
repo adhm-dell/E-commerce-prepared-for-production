@@ -3,6 +3,10 @@
 namespace App\Livewire;
 
 use App\Helpers\CartManagement;
+use App\Helpers\PaymentManagement;
+use App\Models\Address;
+use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -31,19 +35,62 @@ class CheckoutPage extends Component
             'payment_method' => 'required',
         ]);
 
-        // Here you would typically handle the order placement logic,
-        // such as saving the order to the database, processing payment, etc.
+        $cart_items = CartManagement::getCartItems();
 
-        session()->flash('message', 'Order placed successfully!');
+        $order = new Order();
+        $order->user_id = Auth::user()->id;
+        $order->grand_total = CartManagement::calculateTotalPrice($cart_items);
+        $order->payment_method = $this->payment_method;
+        $order->payment_status = 'pending';
+        $order->status = 'new';
+        $order->currncy = 'EGP';
+        $order->shipping_amount = 0;
+        $order->shipping_method = 'none';
+        $order->notes = 'Order placed by ' . Auth::user()->name;
+        // $order->save();
+
+        $address = new Address();
+        $address->order_id = $order->id;
+        $address->first_name = $this->first_name;
+        $address->last_name = $this->last_name;
+        $address->phone = $this->phone;
+        $address->street_address = $this->street_address;
+        $address->city = $this->city;
+        $address->state = $this->state;
+        $address->zip_code = $this->zip_code;
+        // $address->save();
+
+        if ($this->payment_method === 'paymob') {
+            $payment = new PaymentManagement();
+
+            $billing = $payment->generateBillingData(
+                Auth::user()->email,
+                $this->first_name,
+                $this->last_name,
+                $this->phone,
+                $this->street_address,
+                $this->city,
+                $this->state,
+                $this->zip_code
+            );
+
+            $amountCents = $order->grand_total * 100;
+
+            $redirect_url = $payment->generatePaymentLink($billing, $amountCents, 'card');
+            return redirect()->to($redirect_url);
+        }
+
+        // else: handle other payment methods
     }
 
     public function render()
     {
         $cart_items = CartManagement::getCartItems();
-        $garnd_total = CartManagement::calculateTotalPrice($cart_items);
+        $grand_total = CartManagement::calculateTotalPrice($cart_items);
+
         return view('livewire.checkout-page', [
             'cart_items' => $cart_items,
-            'grand_total' => $garnd_total,
+            'grand_total' => $grand_total,
         ]);
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PaymobController;
 use App\Jobs\LogCreatedUser;
 use App\Livewire\Auth\Forgot;
 use App\Livewire\Auth\Login;
@@ -26,6 +27,9 @@ Route::get('/categories', CategoriesPage::class)->name('categories');
 Route::get('/products', ProductsPage::class)->name('products');
 Route::get('/cart', CartPage::class)->name('cart');
 Route::get('/products/{slug}', ProductDetailPage::class)->name('product-detail');
+// routes/web.php or routes/api.php
+Route::match(['get', 'post'], '/paymob/callback', [PaymobController::class, 'handleCallback']);
+
 
 
 
@@ -44,6 +48,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkout', CheckoutPage::class)->name('checkout');
     Route::get('/my-orders', MyOrdersPage::class)->name('my-orders');
     Route::get('/my-orders/{order}', MyOrderDetailPage::class)->name('my-order-detail');
-    Route::get('/success', SuccessPage::class)->name('success');
-    Route::get('/cancel', CancelPage::class)->name('cancel');
+    Route::get('/success', SuccessPage::class)->name('payment.success');
+    Route::get('/failed', CancelPage::class)->name('payment.failed');
 });

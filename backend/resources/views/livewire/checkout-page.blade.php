@@ -146,8 +146,8 @@
                             </label>
                         </li>
                         <li>
-                            <input wire:model='payment_method' class="hidden peer" id="stripe" type="radio"
-                                value="stripe">
+                            <input wire:model='payment_method' class="hidden peer" id="paymob" type="radio"
+                                value="paymob">
                             <label
                                 class="inline-flex items-center justify-between w-full p-5
     text-gray-500 bg-white border rounded-lg cursor-pointer
@@ -157,10 +157,10 @@
     @error('payment_method') border-red-500 dark:border-red-500
     @else border-gray-200 dark:border-gray-700
     @enderror"
-                                for="stripe">
+                                for="paymob">
                                 <div class="block">
                                     <div class="w-full text-lg font-semibold">
-                                        Stripe
+                                        Online Payment
                                     </div>
                                 </div>
                                 <svg aria-hidden="true" class="w-5 h-5 ms-3 rtl:rotate-180" fill="none"
