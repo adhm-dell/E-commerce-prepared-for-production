@@ -14,7 +14,6 @@ class PaymobController extends Controller
 
         $hmac = $data['hmac'] ?? '';
 
-        // ✨ احصل على الحقول بالترتيب الصحيح:
         $hmacFields = [
             'amount_cents',
             'created_at',
@@ -40,21 +39,36 @@ class PaymobController extends Controller
 
         $concatenatedString = '';
         foreach ($hmacFields as $field) {
-            $concatenatedString .= $data[$field] ?? '';
+            $concatenatedString .= array_key_exists($field, $data) ? $data[$field] : '';
         }
 
         $calculatedHmac = hash_hmac('sha512', $concatenatedString, env('PAYMOB_HMAC_SECRET'));
 
         if (!hash_equals($calculatedHmac, $hmac)) {
-            Log::warning('Invalid HMAC from Paymob');
+            Log::warning('❌ Invalid HMAC from Paymob');
             return redirect()->route('payment.failed');
         }
 
-        if ($data['success']) {
-            Log::info("✅ Payment successful for order {$data['order']}");
+        //###production###//
+        // if (
+        //     isset($data['success'], $data['is_auth'], $data['is_capture']) &&
+        //     $data['success'] === "true" &&
+        //     ($data['is_auth'] === "true" || $data['is_capture'] === "true")
+        // ) {
+        //     Log::info("✅ Payment confirmed for order {$data['order']}");
+        //     return redirect()->route('payment.success');
+        // } else {
+        //     Log::info("❌ Payment rejected or incomplete for order {$data['order']}");
+        //     return redirect()->route('payment.failed');
+        // }
+
+
+        //###testing###//
+        if (($data['data_message'] ?? '') === 'Approved') {
+            Log::info("✅ Approved by data_message for order {$data['order']}");
             return redirect()->route('payment.success');
         } else {
-            Log::info("❌ Payment failed for order {$data['order']}");
+            Log::info("❌ Rejected by data_message: {$data['data_message']} for order {$data['order']}");
             return redirect()->route('payment.failed');
         }
     }

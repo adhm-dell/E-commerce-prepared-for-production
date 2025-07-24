@@ -60,7 +60,7 @@ class CheckoutPage extends Component
         $address->zip_code = $this->zip_code;
         // $address->save();
 
-        if ($this->payment_method === 'paymob') {
+        if ($this->payment_method === 'card' || $this->payment_method === 'wallet') {
             $payment = new PaymentManagement();
 
             $billing = $payment->generateBillingData(
@@ -76,7 +76,7 @@ class CheckoutPage extends Component
 
             $amountCents = $order->grand_total * 100;
 
-            $redirect_url = $payment->generatePaymentLink($billing, $amountCents, 'card');
+            $redirect_url = $payment->generatePaymentLink($billing, $amountCents, $this->payment_method);
             return redirect()->to($redirect_url);
         }
 

@@ -32,7 +32,7 @@ class PaymentManagement
 
     public function createIntention(array $billingData, int $amountCents, string $method = 'card')
     {
-        $integrationId = $this->paymobKeys['integrationId'][$method] ?? null;
+        $integrationId = (int) $this->paymobKeys['integrationId'][$method] ?? null;
 
         if (!$integrationId) {
             throw new \Exception("Invalid payment method: $method");
@@ -43,7 +43,7 @@ class PaymentManagement
         $data = [
             'amount' => $amountCents,
             'currency' => 'EGP',
-            'payment_methods' => array(5206932),
+            'payment_methods' => array($integrationId),
             'billing_data' => $billingData,
             'extras' => [
                 'merchant_intention_id' => $merchantIntentionId,
@@ -68,6 +68,7 @@ class PaymentManagement
     public function generatePaymentLink(array $billingData, int $amountCents, string $method = 'card')
     {
         $intention = $this->createIntention($billingData, $amountCents, $method);
+
 
         if (!isset($intention['cs'])) {
             throw new \Exception("Failed to create intention");
