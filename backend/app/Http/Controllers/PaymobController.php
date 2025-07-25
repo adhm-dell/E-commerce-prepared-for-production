@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\CartManagement;
+use App\Models\Address;
+use App\Models\Order;
+use App\Models\Order_Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
 
 class PaymobController extends Controller
 {
+
+
+
     public function handleCallback(Request $request)
     {
         $data = $request->all();
@@ -66,10 +74,47 @@ class PaymobController extends Controller
         //###testing###//
         if (($data['data_message'] ?? '') === 'Approved') {
             Log::info("✅ Approved by data_message for order {$data['order']}");
-            return redirect()->route('payment.success');
-        } else {
-            Log::info("❌ Rejected by data_message: {$data['data_message']} for order {$data['order']}");
-            return redirect()->route('payment.failed');
+
+
+            // Retrieve order and address from cookies
+            $orderJson = Cookie::get('order_data');
+            $addressJson = Cookie::get('address_data');
+
+            if ($orderJson && $addressJson) {
+                $orderData = json_decode($orderJson, true);
+                $addressData = json_decode($addressJson, true);
+
+                // Save order
+                $order = new Order($orderData);
+                $order->payment_status = 'paid';
+                $order->status = 'processing';
+                $order->save();
+
+                // Save address
+                $address = new Address($addressData);
+                $address->order_id = $order->id;
+                $address->save();
+
+                // make cart items
+                $cart_items = CartManagement::getCartItems();
+                foreach ($cart_items as &$item) {
+                    Order_Item::create([
+                        'order_id'     => $order->id,
+                        'product_id'   => $item['product_id'],
+                        'quantity'     => $item['quantity'],
+                        'unit_amount'  => $item['unit_amount'],
+                        'total_amount' => $item['total_amount'],
+                    ]);
+                }
+                Cookie::queue(Cookie::forget('order_data'));
+                Cookie::queue(Cookie::forget('address_data'));
+                CartManagement::clearCartItems();
+
+                return redirect()->route('payment.success');
+            } else {
+                Log::info("❌ Rejected by data_message: {$data['data_message']} for order {$data['order']}");
+                return redirect()->route('payment.failed');
+            }
         }
     }
 }

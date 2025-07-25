@@ -128,7 +128,7 @@ class CartManagement
     }
 
     // clear cart items from cookie
-    static public function createCartItems()
+    static public function clearCartItems()
     {
         Cookie::queue(Cookie::forget('cart_items'));
     }

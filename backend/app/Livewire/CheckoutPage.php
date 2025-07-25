@@ -4,11 +4,14 @@ namespace App\Livewire;
 
 use App\Helpers\CartManagement;
 use App\Helpers\PaymentManagement;
+use App\Http\Controllers\PaymobController;
 use App\Models\Address;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Paymob\Library\Paymob;
 
 #[Title('Checkout Page - FR3ON GYM')]
 class CheckoutPage extends Component
@@ -43,11 +46,10 @@ class CheckoutPage extends Component
         $order->payment_method = $this->payment_method;
         $order->payment_status = 'pending';
         $order->status = 'new';
-        $order->currncy = 'EGP';
+        $order->currency = 'EGP';
         $order->shipping_amount = 0;
         $order->shipping_method = 'none';
         $order->notes = 'Order placed by ' . Auth::user()->name;
-        // $order->save();
 
         $address = new Address();
         $address->order_id = $order->id;
@@ -58,7 +60,6 @@ class CheckoutPage extends Component
         $address->city = $this->city;
         $address->state = $this->state;
         $address->zip_code = $this->zip_code;
-        // $address->save();
 
         if ($this->payment_method === 'card' || $this->payment_method === 'wallet') {
             $payment = new PaymentManagement();
@@ -74,13 +75,17 @@ class CheckoutPage extends Component
                 $this->zip_code
             );
 
+            Cookie::queue('order_data', json_encode($order), 30);
+            Cookie::queue('address_data', json_encode($address), 30);
             $amountCents = $order->grand_total * 100;
-
             $redirect_url = $payment->generatePaymentLink($billing, $amountCents, $this->payment_method);
+
             return redirect()->to($redirect_url);
         }
 
         // else: handle other payment methods
+
+
     }
 
     public function render()

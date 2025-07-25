@@ -32,11 +32,13 @@ class PaymentManagement
 
     public function createIntention(array $billingData, int $amountCents, string $method = 'card')
     {
-        $integrationId = (int) $this->paymobKeys['integrationId'][$method] ?? null;
+        $integrationId = $this->paymobKeys['integrationId'][$method] ?? null;
 
         if (!$integrationId) {
             throw new \Exception("Invalid payment method: $method");
         }
+
+        $integrationId = (int) $integrationId;
 
         $merchantIntentionId = 'intent_' . time();
 
