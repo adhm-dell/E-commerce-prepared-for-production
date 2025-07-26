@@ -5,11 +5,13 @@ namespace App\Livewire;
 use App\Helpers\CartManagement;
 use App\Helpers\PaymentManagement;
 use App\Http\Controllers\PaymobController;
+use App\Mail\OrderPlaced;
 use App\Models\Address;
 use App\Models\Order;
 use App\Models\Order_Item;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Paymob\Library\Paymob;
@@ -112,6 +114,7 @@ class CheckoutPage extends Component
             }
 
             CartManagement::clearCartItems();
+            Mail::to(request()->user())->send(new OrderPlaced($order));
 
             return redirect()->route('payment.success');
         }

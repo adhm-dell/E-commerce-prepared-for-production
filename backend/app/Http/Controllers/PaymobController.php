@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\CartManagement;
+use App\Mail\OrderPlaced;
 use App\Models\Address;
 use App\Models\Order;
 use App\Models\Order_Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class PaymobController extends Controller
 {
@@ -109,7 +111,7 @@ class PaymobController extends Controller
                 Cookie::queue(Cookie::forget('order_data'));
                 Cookie::queue(Cookie::forget('address_data'));
                 CartManagement::clearCartItems();
-
+                Mail::to(request()->user())->send(new OrderPlaced($order));
                 return redirect()->route('payment.success');
             }
         } else {
