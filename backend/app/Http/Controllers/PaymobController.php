@@ -111,10 +111,12 @@ class PaymobController extends Controller
                 CartManagement::clearCartItems();
 
                 return redirect()->route('payment.success');
-            } else {
-                Log::info("❌ Rejected by data_message: {$data['data_message']} for order {$data['order']}");
-                return redirect()->route('payment.failed');
             }
+        } else {
+            Cookie::queue(Cookie::forget('order_data'));
+            Cookie::queue(Cookie::forget('address_data'));
+            Log::info("❌ Rejected by data_message: {$data['data_message']} for order {$data['order']}");
+            return redirect()->route('payment.failed');
         }
     }
 }

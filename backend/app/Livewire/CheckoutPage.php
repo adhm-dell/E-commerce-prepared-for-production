@@ -7,6 +7,7 @@ use App\Helpers\PaymentManagement;
 use App\Http\Controllers\PaymobController;
 use App\Models\Address;
 use App\Models\Order;
+use App\Models\Order_Item;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Livewire\Attributes\Title;
@@ -24,6 +25,14 @@ class CheckoutPage extends Component
     public $state;
     public $zip_code;
     public $payment_method;
+
+    public function mount()
+    {
+        $cart_items = CartManagement::getCartItems();
+        if (empty($cart_items)) {
+            return redirect()->route('products');
+        }
+    }
 
     public function placeOrder()
     {
@@ -81,11 +90,31 @@ class CheckoutPage extends Component
             $redirect_url = $payment->generatePaymentLink($billing, $amountCents, $this->payment_method);
 
             return redirect()->to($redirect_url);
+        } elseif ($this->payment_method === 'cod') {
+            // Save order and address directly for Cash on Delivery
+
+            $order->status = 'processing';
+            $order->save();
+
+            // Save address
+            $address->order_id = $order->id;
+            $address->save();
+
+            // Save order items
+            foreach ($cart_items as $item) {
+                Order_Item::create([
+                    'order_id' => $order->id,
+                    'product_id' => $item['product_id'],
+                    'quantity' => $item['quantity'],
+                    'unit_amount' => $item['unit_amount'],
+                    'total_amount' => $item['total_amount'],
+                ]);
+            }
+
+            CartManagement::clearCartItems();
+
+            return redirect()->route('payment.success');
         }
-
-        // else: handle other payment methods
-
-
     }
 
     public function render()

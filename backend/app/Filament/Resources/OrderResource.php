@@ -52,9 +52,8 @@ class OrderResource extends Resource
                             ->preload(),
                         Select::make('payment_method')
                             ->options([
-                                'credit_card' => 'Credit Card',
-                                'paypal' => 'PayPal',
-                                'bank_transfer' => 'Bank Transfer',
+                                'card' => 'Card',
+                                'wallet' => 'Wallet',
                                 'cod' => 'Cash on Delivery',
                             ]),
                         Select::make('payment_status')
