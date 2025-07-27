@@ -232,6 +232,29 @@
                     </div>
                     </hr>
                 </div>
+                <!-- Coupon Code Section -->
+                <div class="bg-white mt-4 rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900 dark:text-white">
+                    <div class="text-lg font-bold text-gray-700 dark:text-white mb-2">Have a Coupon?</div>
+                    <div class="flex gap-2">
+                        <input type="text" wire:model.defer="coupon_code"
+                            class="flex-1 rounded-lg border px-3 py-2 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                            placeholder="Enter coupon code">
+                        <button type="button" wire:click="applyCoupon"
+                            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                            Apply
+                        </button>
+                    </div>
+                    @if ($coupon_applied)
+                        <div class="mt-2 text-green-500 font-semibold">
+                            Coupon applied! You saved {{ $coupon_discount }}%.
+                        </div>
+                    @elseif($invalid_coupon)
+                        <div class="mt-2 text-red-500 font-semibold">
+                            Invalid or expired coupon code.
+                        </div>
+                    @endif
+                </div>
+
                 <button type="submit"
                     class="bg-green-500 mt-4 w-full p-3 rounded-lg text-lg text-white hover:bg-green-600">
                     <span wire:loading.remove>Place Order</span>
