@@ -32,6 +32,7 @@ class CartManagement
                 'id',
                 'name',
                 'price',
+                'discount',
                 'image',
             ]);
 
@@ -39,10 +40,10 @@ class CartManagement
                 $cart_items[] = [
                     'product_id' => $product->id,
                     'name' => $product->name,
-                    'unit_amount' => $product->price,
+                    'unit_amount' => $product->discount ? $product->price - $product->discount : $product->price,
                     'image' => $product->image[0] ?? $product->name, // Assuming image is array
                     'quantity' => 1,
-                    'total_amount' => $product->price,
+                    'total_amount' => $product->discount ? $product->price - $product->discount : $product->price,
                 ];
             }
         }
@@ -124,7 +125,7 @@ class CartManagement
     // add cart items to cookie
     static public function addCartItemstoCookie($cart_items)
     {
-        Cookie::queue('cart_items', json_encode($cart_items), 60 * 24 * 30); // Store for 30 days
+        Cookie::queue('cart_items', json_encode($cart_items), 14400); // Store for 30 days
     }
 
     // clear cart items from cookie
@@ -184,5 +185,32 @@ class CartManagement
     static public function calculateTotalPrice($items)
     {
         return array_sum(array_column($items, 'total_amount'));
+    }
+
+    static public function refreshCartDiscounts()
+    {
+        $cart_items = self::getCartItems();
+        $updated = false;
+
+        foreach ($cart_items as $key => $item) {
+            $product = Product::find($item['product_id']);
+
+            if ($product) {
+                $new_unit_price = $product->discount ? $product->price - $product->discount : $product->price;
+
+                if ($new_unit_price != $item['unit_amount']) {
+                    // Update the price and total
+                    $cart_items[$key]['unit_amount'] = $new_unit_price;
+                    $cart_items[$key]['total_amount'] = $new_unit_price * $cart_items[$key]['quantity'];
+                    $updated = true;
+                }
+            }
+        }
+
+        if ($updated) {
+            self::addCartItemstoCookie($cart_items);
+        }
+
+        return $cart_items; // Optional: return updated cart
     }
 }

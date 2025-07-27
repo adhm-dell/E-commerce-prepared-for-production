@@ -73,7 +73,11 @@ class ProductResource extends Resource
                         TextInput::make('price')
                             ->required()
                             ->numeric()
+                            ->prefix('EGP'),
+                        TextInput::make('discount')
+                            ->numeric()
                             ->prefix('EGP')
+                            ->nullable()
 
                     ]),
                     Section::make('Associations')->schema([

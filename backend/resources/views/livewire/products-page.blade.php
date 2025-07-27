@@ -140,7 +140,6 @@
                                 <div class="border border-gray-300 dark:border-gray-700">
                                     <div class="relative bg-gray-200">
                                         <a href="/products/{{ $product->slug }}" class="">
-                                            {{-- في bug هنا متنساش تعدلها --}}
                                             <img src="{{ url('storage', $product->image[0]) }}"
                                                 alt="{{ $product->name }}" class="object-cover w-full h-56 mx-auto ">
                                         </a>
@@ -153,7 +152,11 @@
                                         </div>
                                         <p class="text-lg ">
                                             <span
-                                                class="text-green-600 dark:text-green-600">{{ Number::currency($product->price, 'EGP') }}</span>
+                                                class="@if ($product->discount) line-through mr-0.5 @endif text-green-600 dark:text-green-600">{{ Number::currency($product->price, 'EGP') }}</span>
+                                            @if ($product->discount)
+                                                <span
+                                                    class="text-green-600 dark:text-green-600">{{ Number::currency($product->price - $product->discount, 'EGP') }}</span>
+                                            @endif
                                         </p>
                                     </div>
                                     <div class="flex justify-center p-4 border-t border-gray-300 dark:border-gray-700">

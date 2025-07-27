@@ -17,6 +17,7 @@ class CartPage extends Component
     public function mount()
     {
         // Initialize cart items and grand total
+        CartManagement::refreshCartDiscounts(); // Ensure updated prices
         $this->cartItems = CartManagement::getCartItems();
         $this->grand_total = CartManagement::calculateTotalPrice($this->cartItems);
     }
