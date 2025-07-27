@@ -72,6 +72,24 @@ class CheckoutPage extends Component
         $address->state = $this->state;
         $address->zip_code = $this->zip_code;
 
+        $order->save();
+        // Save address
+        $address->order_id = $order->id;
+        $address->save();
+
+        // Save order items
+        foreach ($cart_items as $item) {
+            Order_Item::create([
+                'order_id' => $order->id,
+                'product_id' => $item['product_id'],
+                'quantity' => $item['quantity'],
+                'unit_amount' => $item['unit_amount'],
+                'total_amount' => $item['total_amount'],
+            ]);
+        }
+
+        CartManagement::clearCartItems();
+
         if ($this->payment_method === 'card' || $this->payment_method === 'wallet') {
             $payment = new PaymentManagement();
 
@@ -86,34 +104,15 @@ class CheckoutPage extends Component
                 $this->zip_code
             );
 
-            Cookie::queue('order_data', json_encode($order), 30);
-            Cookie::queue('address_data', json_encode($address), 30);
             $amountCents = $order->grand_total * 100;
-            $redirect_url = $payment->generatePaymentLink($billing, $amountCents, $this->payment_method);
+            $redirect_url = $payment->generatePaymentLink($billing, $amountCents, $this->payment_method, $order->id);
 
             return redirect()->to($redirect_url);
         } elseif ($this->payment_method === 'cod') {
             // Save order and address directly for Cash on Delivery
 
-            $order->status = 'processing';
             $order->save();
 
-            // Save address
-            $address->order_id = $order->id;
-            $address->save();
-
-            // Save order items
-            foreach ($cart_items as $item) {
-                Order_Item::create([
-                    'order_id' => $order->id,
-                    'product_id' => $item['product_id'],
-                    'quantity' => $item['quantity'],
-                    'unit_amount' => $item['unit_amount'],
-                    'total_amount' => $item['total_amount'],
-                ]);
-            }
-
-            CartManagement::clearCartItems();
             Mail::to(request()->user())->send(new OrderPlaced($order));
 
             return redirect()->route('payment.success');

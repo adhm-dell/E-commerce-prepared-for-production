@@ -30,7 +30,7 @@ class PaymentManagement
         return $this->paymob->authToken($this->paymobKeys);
     }
 
-    public function createIntention(array $billingData, int $amountCents, string $method = 'card')
+    public function createIntention(array $billingData, int $amountCents, string $method = 'card', int $orderId)
     {
         $integrationId = $this->paymobKeys['integrationId'][$method] ?? null;
 
@@ -50,7 +50,7 @@ class PaymentManagement
             'extras' => [
                 'merchant_intention_id' => $merchantIntentionId,
             ],
-            'special_reference' => $merchantIntentionId,
+            'special_reference' => $orderId,
         ];
         Log::info('Intention Payload:', $data);
         $response = $this->paymob->createIntention($this->paymobKeys['secKey'], $data, $integrationId);
@@ -67,9 +67,9 @@ class PaymentManagement
         return $apiUrl . "unifiedcheckout/?publicKey=" . $this->paymobKeys['pubKey'] . "&clientSecret=$clientSecret";
     }
 
-    public function generatePaymentLink(array $billingData, int $amountCents, string $method = 'card')
+    public function generatePaymentLink(array $billingData, int $amountCents, string $method = 'card', int $orderId)
     {
-        $intention = $this->createIntention($billingData, $amountCents, $method);
+        $intention = $this->createIntention($billingData, $amountCents, $method, $orderId);
 
 
         if (!isset($intention['cs'])) {
