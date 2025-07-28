@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PaymobController;
 use App\Jobs\LogCreatedUser;
+use App\Livewire\AccountPage;
 use App\Livewire\Auth\Forgot;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
@@ -50,4 +51,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/my-orders/{order_id}', MyOrderDetailPage::class)->name('my-orders.show');
     Route::get('/success', SuccessPage::class)->name('payment.success');
     Route::get('/failed', CancelPage::class)->name('payment.failed');
+    Route::get('/my-account', AccountPage::class)->name('my-account');
 });
