@@ -79,6 +79,7 @@ class CartManagement
                 'id',
                 'name',
                 'price',
+                'discount',
                 'image',
             ]);
 
@@ -86,10 +87,10 @@ class CartManagement
                 $cart_items[] = [
                     'product_id' => $product->id,
                     'name' => $product->name,
-                    'unit_amount' => $product->price,
+                    'unit_amount' => $product->discount ? $product->price - $product->discount : $product->price,
                     'image' => $product->image[0] ?? $product->name, // Assuming image is array
                     'quantity' => $qty,
-                    'total_amount' => $product->price,
+                    'total_amount' => $product->discount ? ($product->price - $product->discount) * $qty : $product->price * $qty,
                 ];
             }
         }
