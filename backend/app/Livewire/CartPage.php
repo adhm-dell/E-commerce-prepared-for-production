@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Helpers\CartManagement;
 use App\Livewire\Partials\Navbar;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 

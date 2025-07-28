@@ -39,7 +39,12 @@
                             <h2 class="max-w-xl mb-6 text-2xl font-bold dark:text-gray-400 md:text-4xl">
                                 {{ $product->name }}</h2>
                             <p class="inline-block mb-6 text-4xl font-bold text-gray-700 dark:text-gray-400 ">
-                                <span>{{ Number::currency($product->price, 'EGP') }}</span>
+                                <span>{{ $product->discount ? Number::currency($product->price - $product->discount, 'EGP') : Number::currency($product->price, 'EGP') }}</span>
+                                @if ($product->discount)
+                                    <span class="ml-2 text-lg font-normal text-gray-500 line-through">
+                                        {{ Number::currency($product->price, 'EGP') }}
+                                    </span>
+                                @endif
 
                             </p>
                             <p class="max-w-md text-gray-700 dark:text-gray-400 ">
