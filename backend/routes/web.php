@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PaymobController;
 use App\Jobs\LogCreatedUser;
+use App\Livewire\AboutPage;
 use App\Livewire\AccountPage;
 use App\Livewire\Auth\Forgot;
 use App\Livewire\Auth\Login;
@@ -11,6 +12,7 @@ use App\Livewire\CancelPage;
 use App\Livewire\CartPage;
 use App\Livewire\CategoriesPage;
 use App\Livewire\CheckoutPage;
+use App\Livewire\ContactPage;
 use App\Livewire\HomePage;
 use App\Livewire\MyOrderDetailPage;
 use App\Livewire\MyOrdersPage;
@@ -28,8 +30,11 @@ Route::get('/categories', CategoriesPage::class)->name('categories');
 Route::get('/products', ProductsPage::class)->name('products');
 Route::get('/cart', CartPage::class)->name('cart');
 Route::get('/products/{slug}', ProductDetailPage::class)->name('product-detail');
+Route::get('/contact', ContactPage::class);
+Route::get('/about', AboutPage::class);
 // routes/web.php or routes/api.php
 Route::match(['get', 'post'], '/paymob/callback', [PaymobController::class, 'handleCallback']);
+
 
 
 

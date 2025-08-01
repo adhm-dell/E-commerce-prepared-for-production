@@ -2,10 +2,21 @@
     <div class="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 lg:pt-20 mx-auto">
         <!-- Grid -->
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
-            <div class="col-span-full lg:col-span-1">
-                <a class="flex-none text-xl font-semibold text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                    href="#" aria-label="Brand">FR3ON GYM</a>
+            <div class="flex flex-col  col-span-full lg:col-span-1 text-center lg:text-left">
+                <!-- Brand name -->
+
+                <a class="flex-none text-2xl font-bold text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                    href="/" aria-label="Brand">
+                    FR3ON GYM
+                </a>
+
+
+                <!-- Logo under brand name -->
+                <div class="mt-2">
+                    <img src="{{ asset('images/logo.png') }}" alt="FR3ON GYM Logo" class="mx-auto lg:mx-0 w-28 h-auto">
+                </div>
             </div>
+
             <!-- End Col -->
 
             <div class="col-span-1">
@@ -17,7 +28,7 @@
                     <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                             href="/products">All Products</a></p>
                     <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                            href="/products">Featured Products</a></p>
+                            href="/products?on_sale=true">On Sale Products</a></p>
                 </div>
             </div>
             <!-- End Col -->
@@ -27,34 +38,42 @@
 
                 <div class="mt-3 grid space-y-3">
                     <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                            href="#">About us</a></p>
-                    <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                            href="/about">About us</a></p>
+                    {{-- <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                             href="#">Blog</a></p>
 
                     <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                            href="#">Customers</a></p>
+                            href="#">Customers</a></p> --}}
                 </div>
             </div>
             <!-- End Col -->
 
             <div class="col-span-2">
-                <h4 class="font-semibold text-gray-100">Stay up to date</h4>
+                <h4 class="font-semibold text-gray-100">Contact Us</h4>
 
-                <form>
-                    <div
-                        class="mt-4 flex flex-col items-center gap-2 sm:flex-row sm:gap-3 bg-white rounded-lg p-2 dark:bg-gray-800">
-                        <div class="w-full">
-                            <input type="text" id="hero-input" name="hero-input"
-                                class="py-3 px-4 block w-full border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600"
-                                placeholder="Enter your email">
-                        </div>
-                        <a class="w-full sm:w-auto whitespace-nowrap p-3 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                            href="#">
-                            Subscribe
-                        </a>
+                <form wire:submit.prevent="sendMessage">
+                    <div class="mt-4 flex flex-col gap-3 bg-white rounded-lg p-4 dark:bg-gray-800">
+                        <input type="text" wire:model.defer="name" placeholder="Your Name" required
+                            class="py-3 px-4 block w-full rounded-lg text-sm dark:bg-slate-900 dark:text-gray-400" />
+
+                        <input type="email" wire:model.defer="email" placeholder="Your Email" required
+                            class="py-3 px-4 block w-full rounded-lg text-sm dark:bg-slate-900 dark:text-gray-400" />
+
+                        <textarea wire:model.defer="message" rows="3" placeholder="Your Message" required
+                            class="py-3 px-4 block w-full rounded-lg text-sm dark:bg-slate-900 dark:text-gray-400"></textarea>
+
+                        <button type="submit"
+                            class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 text-sm font-semibold">
+                            <span wire:loading.remove>Send Message</span>
+                            <span wire:loading>Sending...</span>
+                        </button>
+
+                        @if ($successMessage)
+                            <p class="text-green-500 text-sm mt-2">{{ $successMessage }}</p>
+                        @endif
                     </div>
-
                 </form>
+
             </div>
             <!-- End Col -->
         </div>
@@ -62,44 +81,39 @@
 
         <div class="mt-5 sm:mt-12 grid gap-y-2 sm:gap-y-0 sm:flex sm:justify-between sm:items-center">
             <div class="flex justify-between items-center">
-                <p class="text-sm text-gray-400">© 2024 DCodeMania. All rights reserved.</p>
+                <p class="text-sm text-gray-400">© 2025 FR3ON GYM. All rights reserved.</p>
             </div>
             <!-- End Col -->
 
             <!-- Social Brands -->
             <div>
                 <a class="w-10 h-10 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-white hover:bg-white/10 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600"
-                    href="#">
-                    <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                    href="https://www.facebook.com/share/19pRYwXkUm/">
+                    <svg class="flex-shrink-0 w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                         fill="currentColor" viewBox="0 0 16 16">
                         <path
                             d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
                     </svg>
                 </a>
+
                 <a class="w-10 h-10 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-white hover:bg-white/10 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600"
-                    href="#">
-                    <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                        fill="currentColor" viewBox="0 0 16 16">
+                    href="https://www.instagram.com/fr3on_gym?igsh=cnR2d2QyMDMxa3cx" target="_blank"
+                    rel="noopener noreferrer" aria-label="Instagram">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path
-                            d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
+                            d="M7.75 2C5.12665 2 3 4.12665 3 6.75V17.25C3 19.8734 5.12665 22 7.75 22H16.25C18.8734 22 21 19.8734 21 17.25V6.75C21 4.12665 18.8734 2 16.25 2H7.75ZM12 7.25C14.6234 7.25 16.75 9.37665 16.75 12C16.75 14.6234 14.6234 16.75 12 16.75C9.37665 16.75 7.25 14.6234 7.25 12C7.25 9.37665 9.37665 7.25 12 7.25ZM17.25 6.5C17.25 7.19036 16.6904 7.75 16 7.75C15.3096 7.75 14.75 7.19036 14.75 6.5C14.75 5.80964 15.3096 5.25 16 5.25C16.6904 5.25 17.25 5.80964 17.25 6.5Z" />
                     </svg>
                 </a>
+
                 <a class="w-10 h-10 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-white hover:bg-white/10 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600"
-                    href="#">
-                    <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                        fill="currentColor" viewBox="0 0 16 16">
+                    href="https://wa.me/201018993993" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 32 32" aria-hidden="true">
                         <path
-                            d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" />
+                            d="M16.003 3.001c-7.168 0-12.998 5.83-12.998 12.998a12.91 12.91 0 0 0 1.757 6.511l-1.159 4.229 4.331-1.137a12.939 12.939 0 0 0 6.069 1.515h.002c7.168 0 12.998-5.83 12.998-12.998s-5.83-12.998-12.998-12.998zm0 23.584a10.61 10.61 0 0 1-5.429-1.506l-.389-.231-3.162.83.847-3.084-.245-.399a10.585 10.585 0 1 1 8.378 4.39zm5.83-7.958c-.319-.159-1.889-.93-2.183-1.035s-.506-.159-.719.159c-.212.319-.824 1.035-1.01 1.248-.186.212-.372.239-.691.08-.319-.159-1.35-.497-2.575-1.587-.952-.848-1.595-1.892-1.782-2.211-.186-.319-.02-.491.139-.65.143-.143.319-.372.478-.558.159-.186.212-.319.319-.531.106-.212.053-.399-.026-.558s-.719-1.733-.983-2.38c-.259-.62-.523-.537-.719-.547-.186-.009-.399-.009-.612-.009s-.558.08-.85.372c-.292.292-1.118 1.092-1.118 2.662s1.145 3.09 1.304 3.305c.159.212 2.252 3.437 5.454 4.818.763.329 1.359.526 1.823.672.766.243 1.464.209 2.016.127.615-.092 1.889-.772 2.155-1.518.265-.745.265-1.383.186-1.518-.079-.135-.292-.212-.611-.372z" />
                     </svg>
                 </a>
-                <a class="w-10 h-10 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-white hover:bg-white/10 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600"
-                    href="#">
-                    <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                        fill="currentColor" viewBox="0 0 16 16">
-                        <path
-                            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
-                    </svg>
-                </a>
+
+
 
             </div>
             <!-- End Social Brands -->

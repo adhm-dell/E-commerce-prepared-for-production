@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Livewire\Partials;
+namespace App\Livewire;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Mail;
 
-class Footer extends Component
+class ContactPage extends Component
 {
     public $name;
     public $email;
@@ -20,18 +20,16 @@ class Footer extends Component
             'message' => 'required|string|max:1000',
         ]);
 
-        // Send email or store in DB
-        Mail::raw("Message from {$this->name} <{$this->email}>:\n\n{$this->message}", function ($mail) {
-            $mail->to('fr3ongym2024@gmail.com')
-                ->subject('FR3ON GYM Contact Form');
+        Mail::raw("Message from {$this->name} ({$this->email}):\n\n{$this->message}", function ($mail) {
+            $mail->to('fr3ongym2024@gmail.com')->subject('FR3ON GYM Contact Form');
         });
 
         $this->reset(['name', 'email', 'message']);
-        $this->successMessage = 'Thank you! Your message has been sent.';
+        $this->successMessage = 'Thank you for contacting us! We will respond shortly.';
     }
 
     public function render()
     {
-        return view('livewire.partials.footer');
+        return view('livewire.contact-page');
     }
 }
