@@ -73,11 +73,13 @@ class ProductResource extends Resource
                         TextInput::make('price')
                             ->required()
                             ->numeric()
-                            ->prefix('EGP'),
+                            ->prefix('EGP')
+                            ->rule('min:0'),
                         TextInput::make('discount')
                             ->numeric()
                             ->prefix('EGP')
                             ->nullable()
+                            ->rule('min:0')
 
                     ]),
                     Section::make('Associations')->schema([

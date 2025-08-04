@@ -52,15 +52,15 @@
                 <h4 class="font-semibold text-gray-100">Contact Us</h4>
 
                 <form wire:submit.prevent="sendMessage">
-                    <div class="mt-4 flex flex-col gap-3 bg-white rounded-lg p-4 dark:bg-gray-800">
+                    <div class="mt-4 flex flex-col gap-3  rounded-lg p-4 bg-gray-800">
                         <input type="text" wire:model.defer="name" placeholder="Your Name" required
-                            class="py-3 px-4 block w-full rounded-lg text-sm dark:bg-slate-900 dark:text-gray-400" />
+                            class="py-3 px-4 block w-full rounded-lg text-sm bg-slate-900 text-gray-400" />
 
                         <input type="email" wire:model.defer="email" placeholder="Your Email" required
-                            class="py-3 px-4 block w-full rounded-lg text-sm dark:bg-slate-900 dark:text-gray-400" />
+                            class="py-3 px-4 block w-full rounded-lg text-sm bg-slate-900 text-gray-400" />
 
                         <textarea wire:model.defer="message" rows="3" placeholder="Your Message" required
-                            class="py-3 px-4 block w-full rounded-lg text-sm dark:bg-slate-900 dark:text-gray-400"></textarea>
+                            class="py-3 px-4 block w-full rounded-lg text-sm bg-slate-900 text-gray-400"></textarea>
 
                         <button type="submit"
                             class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 text-sm font-semibold">
