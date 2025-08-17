@@ -7,9 +7,9 @@
                     Payment Failed! Order Cancelled!
                 </h1>
                 <div class="mt-8 flex justify-center">
-                    <a href="/checkout"
+                    <a href="/products"
                         class="inline-block px-6 py-2 text-white bg-red-500 hover:bg-red-600 rounded shadow transition-all duration-200">
-                        Try Again: Go to Checkout
+                        Try To Order Again: Go To Products Page
                     </a>
                 </div>
             </div>

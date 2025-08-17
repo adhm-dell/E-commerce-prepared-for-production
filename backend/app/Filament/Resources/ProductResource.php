@@ -93,6 +93,10 @@ class ProductResource extends Resource
                             ->relationship('brand', 'name')
                             ->required()
                             ->searchable(),
+                        TextInput::make('stock')
+                            ->numeric()
+                            ->nullable()
+                            ->rule('min:0')
                     ]),
                     Section::make('Status')->schema([
                         Forms\Components\Toggle::make('in_stock')

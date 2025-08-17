@@ -5,7 +5,7 @@
                 <div class="w-full mb-8 md:w-1/2 md:mb-0" x-data="{ mainImage: '{{ isset($product->image[0]) ? url('storage', $product->image[0]) : $product->name }}' }">
                     <div class="sticky top-0 z-50 overflow-hidden ">
                         <div class="relative mb-6 lg:mb-10 lg:h-2/4 ">
-                            @if (!$product->in_stock)
+                            @if (!$product->in_stock || $product->stock <= 0)
                                 <div
                                     class="absolute top-2 left-2 bg-red-600 text-white text-xl font-bold px-2 py-1 rounded shadow z-10">
                                     Out of Stock
@@ -75,7 +75,7 @@
                             </div>
                         </div>
                         <div class="flex flex-wrap items-center gap-4">
-                            @if ($product->in_stock)
+                            @if ($product->in_stock && $product->stock > 0)
                                 <button wire:click='addToCart({{ $product->id }})'
                                     class="w-full p-4 bg-blue-500 rounded-md lg:w-2/5 dark:text-gray-200 text-gray-50 hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700">
                                     <span wire:loading.remove wire:target='addToCart({{ $product->id }})'>Add to

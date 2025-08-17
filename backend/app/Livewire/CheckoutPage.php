@@ -9,6 +9,7 @@ use App\Models\Address;
 use App\Models\Order;
 use App\Models\Order_Item;
 use App\Models\CouponCode;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Attributes\Title;
@@ -75,6 +76,16 @@ class CheckoutPage extends Component
         ]);
 
         $cart_items = CartManagement::getCartItems();
+
+        // ✅ تحقق من المخزون
+        foreach ($cart_items as $item) {
+            $product = Product::find($item['product_id']);
+            if (!$product || $product->stock < $item['quantity']) {
+                $this->addError('stock_error', "Product '{$product->name}' is out of stock or insufficient quantity.");
+                return; // وقف العملية
+            }
+        }
+
         $grand_total = CartManagement::calculateTotalPrice($cart_items);
 
         if ($this->coupon_applied && $this->coupon_discount > 0) {
@@ -106,6 +117,11 @@ class CheckoutPage extends Component
         ]);
 
         foreach ($cart_items as $item) {
+            $product = Product::find($item['product_id']);
+
+            // ✅ خصم الكمية من المخزون
+            $product->decrement('stock', $item['quantity']);
+
             Order_Item::create([
                 'order_id' => $order->id,
                 'product_id' => $item['product_id'],

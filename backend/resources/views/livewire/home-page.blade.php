@@ -167,9 +167,8 @@
                     </div>
                 </div>
                 <p class="mb-12 text-base text-center text-gray-500">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus magni eius eaque?
-                    Pariatur
-                    numquam, odio quod nobis ipsum ex cupiditate?
+                    Discover the most trusted names in sports nutrition. Our popular brands are known worldwide for
+                    their premium quality and athlete-approved supplements.
                 </p>
             </div>
         </div>
@@ -213,9 +212,8 @@
                     </div>
                 </div>
                 <p class="mb-12 text-base text-center text-gray-500">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus magni eius eaque?
-                    Pariatur
-                    numquam, odio quod nobis ipsum ex cupiditate?
+                    Discover our most popular supplement categories designed to help you perform better, recover faster,
+                    and achieve your fitness goals with confidence.
                 </p>
             </div>
         </div>
@@ -276,9 +274,8 @@
                     </div>
                 </div>
                 <p class="mb-12 text-base text-center text-gray-500">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus magni eius eaque?
-                    Pariatur
-                    numquam, odio quod nobis ipsum ex cupiditate?
+                    Discover our most popular supplement products designed to help you perform better, recover faster,
+                    and achieve your fitness goals with confidence.
                 </p>
             </div>
         </div>

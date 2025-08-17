@@ -21,6 +21,7 @@ class Product extends Model
         'is_active',
         'is_featured',
         'in_stock',
+        'stock',
         'on_sale'
     ];
 

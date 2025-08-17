@@ -73,6 +73,16 @@ class PaymobController extends Controller
             $order->payment_status = 'failed';
             $order->status = 'cancelled';
             $order->save();
+
+            // 🔄 Restore product stock
+            foreach ($order->items as $item) {
+                $product = $item->product;
+                if ($product) {
+                    $product->stock += $item->quantity; // Restore stock
+                    $product->save();
+                }
+            }
+
             Log::info("❌ Payment rejected or incomplete for order {$data['order']}");
             return redirect()->route('payment.failed');
         }

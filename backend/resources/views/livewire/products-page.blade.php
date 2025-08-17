@@ -139,7 +139,7 @@
                             <div wire:key="{{ $product->id }}" class="w-full px-3 mb-6 sm:w-1/2 md:w-1/3">
                                 <div class="border border-gray-300 dark:border-gray-700">
                                     <div class="relative bg-gray-200">
-                                        @if (!$product->in_stock)
+                                        @if (!$product->in_stock || $product->stock <= 0)
                                             <div
                                                 class="absolute top-1 left-1 bg-red-600 text-white text-lg font-bold px-2 py-1 rounded shadow-md z-10">
                                                 Out of Stock
@@ -166,7 +166,7 @@
                                         </p>
                                     </div>
                                     <div class="flex justify-center p-4 border-t border-gray-300 dark:border-gray-700">
-                                        @if ($product->in_stock)
+                                        @if ($product->in_stock && $product->stock > 0)
                                             <a wire:click.prevent='addToCart({{ $product->id }})' href="#"
                                                 class="text-gray-500 flex items-center space-x-2 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-300">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
