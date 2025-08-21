@@ -8,6 +8,8 @@
                     <img src="{{ asset('favicon.png') }}" alt="Logo" class="w-8 h-8 mr-1.5">
                     FR3ON GYM
                 </a>
+                <livewire:language-switcher />
+
                 <div class="md:hidden">
                     <button type="button"
                         class="hs-collapse-toggle flex justify-center items-center w-9 h-9 text-sm font-semibold rounded-lg border border-gray-200 text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
@@ -39,19 +41,22 @@
                         class="flex flex-col gap-x-0 mt-5 divide-y divide-dashed divide-gray-200 md:flex-row md:items-center md:justify-end md:gap-x-7 md:mt-0 md:ps-7 md:divide-y-0 md:divide-solid dark:divide-gray-700">
 
                         {{-- Home --}}
-                        <a wire:navigate
-                            class="  font-medium py-3 md:py-6 {{ request()->is('/') ? 'text-blue-600 dark:text-blue-500 hover:text-gray-400' : 'text-gray-600 dark:text-gray-400 dark:hover:text-gray-500' }}"
-                            href="/">Home</a>
+                        <a wire:navigate href="/"
+                            class="font-medium py-3 md:py-6 {{ request()->is('/') ? 'text-blue-600 dark:text-blue-500 hover:text-gray-400' : 'text-gray-600 dark:text-gray-400 dark:hover:text-gray-500' }}">
+                            {{ __('navbar.home') }}
+                        </a>
 
                         {{-- Categories --}}
                         <a wire:navigate
                             class="  font-medium py-3 md:py-6 {{ request()->is('categories') ? 'text-blue-600 dark:text-blue-500 hover:text-gray-400' : 'text-gray-600 dark:text-gray-400 dark:hover:text-gray-500' }}"
-                            href="/categories">Categories</a>
+                            href="/categories">{{ __('navbar.categories') }}</a>
 
                         {{-- Products --}}
                         <a wire:navigate
                             class=" font-medium py-3 md:py-6 {{ request()->is('products') ? 'text-blue-600 dark:text-blue-500 hover:text-gray-400' : 'text-gray-600 dark:text-gray-400 dark:hover:text-gray-500' }}"
-                            href="/products">Products</a>
+                            href="/products">
+                            {{ __('navbar.products') }}
+                        </a>
 
                         {{-- Cart --}}
                         <a wire:navigate
@@ -67,7 +72,7 @@
                                       1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5
                                       0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                             </svg>
-                            <span class="mr-1">Cart</span>
+                            <span class="mr-1">{{ __('navbar.cart') }}</span>
                             <span
                                 class="py-0.5 px-1.5 rounded-full text-xs font-medium bg-blue-50 border border-blue-200 text-blue-600">{{ $total_count }}</span>
                         </a>
@@ -84,7 +89,7 @@
                                         <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                                         <circle cx="12" cy="7" r="4" />
                                     </svg>
-                                    Log in
+                                    {{ __('navbar.login') }}
                                 </a>
                             </div>
                         @endguest
@@ -105,17 +110,17 @@
                                     class="hs-dropdown-menu absolute top-full  right-0 z-10 transition-[opacity,margin] duration-[150ms] hs-dropdown-open:opacity-100 opacity-0 md:w-48 hidden bg-white shadow-md rounded-lg p-2 dark:bg-gray-800 border dark:border-gray-700 dark:divide-gray-700">
                                     <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
                                         wire:navigate href="/my-orders">
-                                        My Orders
+                                        {{ __('navbar.my_orders') }}
                                     </a>
                                     <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
                                         wire:navigate href="/my-account">
-                                        My Account
+                                        {{ __('navbar.my_account') }}
                                     </a>
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
                                         <button type="submit"
                                             class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300">
-                                            Logout
+                                            {{ __('navbar.logout') }}
                                         </button>
                                     </form>
                                 </div>
