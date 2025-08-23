@@ -7,7 +7,7 @@
                         class="p-4 mb-5 sm:mb-2 bg-white border border-gray-200 dark:border-gray-900 dark:bg-gray-900">
                         <h2 class="text-2xl font-bold dark:text-gray-400 flex justify-between items-center cursor-pointer lg:cursor-default"
                             @click="open = !open">
-                            Categories
+                            {{ __('products.categories') }}
                             <svg class="w-5 h-5 ml-2 lg:hidden transform transition-transform duration-300"
                                 :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" stroke-width="2"
                                 viewBox="0 0 24 24">
@@ -22,7 +22,8 @@
                                 <li wire:key="{{ $category->id }}" class="mb-4">
                                     <label for="{{ $category->slug }}" class="flex items-center dark:text-gray-400 ">
                                         <input type="checkbox" wire:model.live="selected_categories"
-                                            id="{{ $category->slug }}" value="{{ $category->id }}" class="w-4 h-4 mr-2">
+                                            id="{{ $category->slug }}" value="{{ $category->id }}"
+                                            class="w-4 h-4 ltr:mr-2 rtl:ml-2">
                                         <span class="text-lg">{{ $category->name }}</span>
                                     </label>
                                 </li>
@@ -34,7 +35,7 @@
                         class="p-4 mb-5 sm:mb-2 bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-900">
                         <h2 class="text-2xl font-bold dark:text-gray-400 flex justify-between items-center cursor-pointer lg:cursor-default"
                             @click="open = !open">
-                            Brand
+                            {{ __('products.brand') }}
                             <svg class="w-5 h-5 ml-2 lg:hidden transform transition-transform duration-300"
                                 :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" stroke-width="2"
                                 viewBox="0 0 24 24">
@@ -50,7 +51,8 @@
                                 <li wire:key="{{ $brand->id }}" class="mb-4">
                                     <label for="{{ $brand->slug }}" class="flex items-center dark:text-gray-300">
                                         <input wire:model.live="selected_brands" id="{{ $brand->slug }}"
-                                            value="{{ $brand->id }}" type="checkbox" class="w-4 h-4 mr-2">
+                                            value="{{ $brand->id }}" type="checkbox"
+                                            class="w-4 h-4 ltr:mr-2 rtl:ml-2">
                                         <span class="text-lg dark:text-gray-400">{{ $brand->name }}</span>
                                     </label>
                                 </li>
@@ -63,7 +65,7 @@
                         class="p-4 mb-5 bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-900">
                         <h2 class="text-2xl font-bold dark:text-gray-400 flex justify-between items-center cursor-pointer lg:cursor-default"
                             @click="open = !open">
-                            Product Status
+                            {{ __('products.product_status') }}
                             <svg class="w-5 h-5 ml-2 lg:hidden transform transition-transform duration-300"
                                 :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" stroke-width="2"
                                 viewBox="0 0 24 24">
@@ -78,15 +80,15 @@
                             <li class="mb-4">
                                 <label class="flex items-center dark:text-gray-300">
                                     <input wire:model.live="in_stock" value="1" type="checkbox"
-                                        class="w-4 h-4 mr-2">
-                                    <span class="text-lg dark:text-gray-400">In Stock</span>
+                                        class="w-4 h-4 ltr:mr-2 rtl:ml-2">
+                                    <span class="text-lg dark:text-gray-400">{{ __('products.in_stock') }}</span>
                                 </label>
                             </li>
                             <li class="mb-4">
                                 <label class="flex items-center dark:text-gray-300">
                                     <input wire:model.live="on_sale" value="1" type="checkbox"
-                                        class="w-4 h-4 mr-2">
-                                    <span class="text-lg dark:text-gray-400">On Sale</span>
+                                        class="w-4 h-4 ltr:mr-2 rtl:ml-2">
+                                    <span class="text-lg dark:text-gray-400">{{ __('products.on_sale') }}</span>
                                 </label>
                             </li>
                         </ul>
@@ -94,7 +96,7 @@
 
 
                     <div class="p-4 mb-5 bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-900">
-                        <h2 class="text-2xl font-bold dark:text-gray-400">Price</h2>
+                        <h2 class="text-2xl font-bold dark:text-gray-400">{{ __('products.price') }}</h2>
                         <div class="w-16 pb-2 mb-6 border-b border-rose-600 dark:border-gray-400"></div>
 
                         <div>
@@ -127,8 +129,8 @@
                             <div class="flex items-center justify-between">
                                 <select wire:model.live="sortBy"
                                     class="block w-40 text-base bg-gray-100 cursor-pointer dark:text-gray-400 dark:bg-gray-900">
-                                    <option value="latest">Sort by Latest</option>
-                                    <option value="price">Sort by Price</option>
+                                    <option value="latest">{{ __('products.sort_by_latest') }}</option>
+                                    <option value="price">{{ __('products.sort_by_price') }}</option>
                                 </select>
                             </div>
                         </div>
@@ -142,7 +144,7 @@
                                         @if (!$product->in_stock || $product->stock <= 0)
                                             <div
                                                 class="absolute top-1 left-1 bg-red-600 text-white text-lg font-bold px-2 py-1 rounded shadow-md z-10">
-                                                Out of Stock
+                                                {{ __('products.out_of_stock') }}
                                             </div>
                                         @endif
                                         <a wire:navigate href="/products/{{ $product->slug }}" class="">
@@ -177,15 +179,15 @@
                                                     </path>
                                                 </svg>
                                                 <span wire:loading.remove
-                                                    wire:target='addToCart({{ $product->id }})'>Add to Cart</span>
+                                                    wire:target='addToCart({{ $product->id }})'>{{ __('products.add_to_cart') }}</span>
                                                 <span wire:loading
-                                                    wire:target='addToCart({{ $product->id }})'>Adding...</span>
+                                                    wire:target='addToCart({{ $product->id }})'>{{ __('products.adding') }}</span>
                                             </a>
                                         @else
                                             <button disabled
                                                 class="text-gray-400 flex items-center space-x-2 cursor-not-allowed dark:text-gray-500">
 
-                                                <span>Unavailable</span>
+                                                <span>{{ __('products.unavailable') }}</span>
                                             </button>
                                         @endif
 

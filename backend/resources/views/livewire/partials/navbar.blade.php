@@ -80,7 +80,7 @@
                         </a>
 
                         {{-- Language Switcher --}}
-                        <div class="ml-4">
+                        <div>
                             <livewire:language-switcher />
                         </div>
 

@@ -25,7 +25,7 @@ class ContactPage extends Component
         });
 
         $this->reset(['name', 'email', 'message']);
-        $this->successMessage = 'Thank you for contacting us! We will respond shortly.';
+        $this->successMessage = __('contact.form.success');
     }
 
     public function render()

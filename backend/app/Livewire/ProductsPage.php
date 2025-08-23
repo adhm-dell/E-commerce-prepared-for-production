@@ -94,7 +94,8 @@ class ProductsPage extends Component
         }
 
         if ($this->in_stock) {
-            $productsQuery->where('in_stock', true);
+            $productsQuery->where('in_stock', true)
+                ->where('stock', '>', 0);
         }
 
         if ($this->on_sale) {
