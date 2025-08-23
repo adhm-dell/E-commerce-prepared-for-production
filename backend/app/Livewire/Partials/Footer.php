@@ -27,7 +27,7 @@ class Footer extends Component
         });
 
         $this->reset(['name', 'email', 'message']);
-        $this->successMessage = 'Thank you! Your message has been sent.';
+        $this->successMessage = __('footer.success_message');
     }
 
     public function render()

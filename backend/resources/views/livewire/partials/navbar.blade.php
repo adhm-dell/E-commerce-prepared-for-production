@@ -8,7 +8,6 @@
                     <img src="{{ asset('favicon.png') }}" alt="Logo" class="w-8 h-8 mr-1.5">
                     FR3ON GYM
                 </a>
-                <livewire:language-switcher />
 
                 <div class="md:hidden">
                     <button type="button"
@@ -33,10 +32,13 @@
                 </div>
             </div>
 
+
             <div id="navbar-collapse-with-animation"
-                class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow md:block">
+                class="hs-collapse hidden overflow-hidden transition-all duration-300   md:block">
+
                 <div
                     class="overflow-hidden overflow-y-auto max-h-[75vh] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-slate-700 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500">
+
                     <div
                         class="flex flex-col gap-x-0 mt-5 divide-y divide-dashed divide-gray-200 md:flex-row md:items-center md:justify-end md:gap-x-7 md:mt-0 md:ps-7 md:divide-y-0 md:divide-solid dark:divide-gray-700">
 
@@ -77,6 +79,11 @@
                                 class="py-0.5 px-1.5 rounded-full text-xs font-medium bg-blue-50 border border-blue-200 text-blue-600">{{ $total_count }}</span>
                         </a>
 
+                        {{-- Language Switcher --}}
+                        <div class="ml-4">
+                            <livewire:language-switcher />
+                        </div>
+
                         {{-- Login --}}
                         @guest
                             <div class="pt-3 md:pt-0">
@@ -95,7 +102,7 @@
                         @endguest
                         {{-- User Dropdown --}}
                         @auth
-                            <div class="hs-dropdown relative md:[--strategy:fixed] md:[--trigger:hover] md:py-4">
+                            <div class="hs-dropdown relative md:[--strategy:fixed]  md:py-4">
                                 <button type="button"
                                     class="flex items-center w-full text-gray-500 hover:text-gray-400 font-medium dark:text-gray-400 dark:hover:text-gray-500">
                                     {{ Auth::user()->name }}

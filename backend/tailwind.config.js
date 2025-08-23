@@ -1,4 +1,5 @@
 import defaultTheme from "tailwindcss/defaultTheme";
+import rtl from "tailwindcss-rtl";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -17,5 +18,5 @@ export default {
             },
         },
     },
-    plugins: [],
+    plugins: [rtl],
 };
