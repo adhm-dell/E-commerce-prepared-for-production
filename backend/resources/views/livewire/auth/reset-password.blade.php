@@ -4,7 +4,7 @@
             <div class="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-gray-800 dark:border-gray-700">
                 <div class="p-4 sm:p-7">
                     <div class="text-center">
-                        <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Reset password</h1>
+                        <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">{{ __('reset.title') }}</h1>
                     </div>
 
                     <div class="mt-5">
@@ -14,7 +14,9 @@
                                 <div class="mb-4">
                                     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
                                         role="alert">
-                                        <strong class="font-bold">Error!</strong>
+                                        <strong class="font-bold">
+                                            {{ __('reset.error_title') }}
+                                        </strong>
                                         <br>
                                         <span class="block sm:inline">{{ session('error') }}</span>
                                     </div>
@@ -23,7 +25,8 @@
                             <div class="grid gap-y-4">
                                 <!-- Form Group -->
                                 <div>
-                                    <label for="password" class="block text-sm mb-2 dark:text-white">Password</label>
+                                    <label for="password"
+                                        class="block text-sm mb-2 dark:text-white">{{ __('reset.password') }}</label>
                                     <div class="relative">
                                         <input type="password" id="password" wire:model="password"
                                             class="py-3 px-4 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
@@ -47,7 +50,7 @@
 
                                 <div>
                                     <label for="password_confirmation"
-                                        class="block text-sm mb-2 dark:text-white">Confirm Password</label>
+                                        class="block text-sm mb-2 dark:text-white">{{ __('reset.confirm_password') }}</label>
                                     <div class="relative">
                                         <input type="password" id="password_confirmation"
                                             wire:model="password_confirmation"
@@ -71,7 +74,7 @@
 
                                 <button type="submit"
                                     class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-                                    Save password
+                                    {{ __('reset.save') }}
                                 </button>
                             </div>
                         </form>

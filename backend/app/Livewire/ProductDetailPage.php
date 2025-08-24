@@ -36,7 +36,7 @@ class ProductDetailPage extends Component
         $total_count = CartManagement::addItemToCartWithQty($product_id, $this->quantity);
         $this->dispatch('update-cart-count', total_count: $total_count)->to(Navbar::class);
 
-        LivewireAlert::title('Product Added to Cart Successfully!')
+        LivewireAlert::title(__('products.notification.added_to_cart'))
             ->success()
             ->position('bottom-end')
             ->toast(true)

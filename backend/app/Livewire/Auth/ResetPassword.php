@@ -50,7 +50,7 @@ class ResetPassword extends Component
                 event(new PasswordReset($user));
             }
         );
-        return $status === Password::PasswordReset ? redirect('/login') : session()->flash('error', 'Something went wrong, please try again.');
+        return $status === Password::PasswordReset ? redirect('/login') : session()->flash('error', __('reset.error'));
     }
 
     public function render()

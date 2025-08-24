@@ -47,7 +47,7 @@
                             <p class="inline-block mb-6 text-4xl font-bold text-gray-700 dark:text-gray-400 ">
                                 <span>{{ $product->discount ? Number::currency($product->price - $product->discount, 'EGP') : Number::currency($product->price, 'EGP') }}</span>
                                 @if ($product->discount)
-                                    <span class="ml-2 text-lg font-normal text-gray-500 line-through">
+                                    <span class="ltr:ml-2 rtl:mr-2 text-lg font-normal text-gray-500 line-through">
                                         {{ Number::currency($product->price, 'EGP') }}
                                     </span>
                                 @endif
