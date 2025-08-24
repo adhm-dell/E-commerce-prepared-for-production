@@ -1,6 +1,6 @@
 <div class="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">
     <h1 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">
-        Checkout
+        {{ __('checkout.title') }}
     </h1>
     <form wire:submit.prevent="placeOrder">
         <div class="grid grid-cols-12 gap-4">
@@ -10,12 +10,12 @@
                     <!-- Shipping Address -->
                     <div class="mb-6">
                         <h2 class="text-xl font-bold underline text-gray-700 dark:text-white mb-2">
-                            Shipping Address
+                            {{ __('checkout.shipping.title') }}
                         </h2>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-gray-700 dark:text-white mb-1" for="first_name">
-                                    First Name
+                                    {{ __('checkout.shipping.first_name') }}
                                 </label>
                                 <input wire:model="first_name"
                                     class="w-full rounded-lg border py-2 px-3
@@ -29,7 +29,7 @@
                             </div>
                             <div>
                                 <label class="block text-gray-700 dark:text-white mb-1" for="last_name">
-                                    Last Name
+                                    {{ __('checkout.shipping.last_name') }}
                                 </label>
                                 <input wire:model="last_name"
                                     class="w-full rounded-lg border py-2 px-3
@@ -44,7 +44,7 @@
                         </div>
                         <div class="mt-4">
                             <label class="block text-gray-700 dark:text-white mb-1" for="phone">
-                                Phone
+                                {{ __('checkout.shipping.phone') }}
                             </label>
                             <input wire:model="phone"
                                 class="w-full rounded-lg border py-2 px-3
@@ -58,7 +58,7 @@
                         </div>
                         <div class="mt-4">
                             <label class="block text-gray-700 dark:text-white mb-1" for="address">
-                                Address
+                                {{ __('checkout.shipping.address') }}
                             </label>
                             <input wire:model="street_address"
                                 class="w-full rounded-lg border py-2 px-3
@@ -72,7 +72,7 @@
                         </div>
                         <div class="mt-4">
                             <label class="block text-gray-700 dark:text-white mb-1" for="city">
-                                City
+                                {{ __('checkout.shipping.city') }}
                             </label>
                             <input wire:model="city"
                                 class="w-full rounded-lg border py-2 px-3
@@ -87,7 +87,7 @@
                         <div class="grid grid-cols-2 gap-4 mt-4">
                             <div>
                                 <label class="block text-gray-700 dark:text-white mb-1" for="state">
-                                    State
+                                    {{ __('checkout.shipping.state') }}
                                 </label>
                                 <input wire:model="state"
                                     class="w-full rounded-lg border py-2 px-3
@@ -101,7 +101,7 @@
                             </div>
                             <div>
                                 <label class="block text-gray-700 dark:text-white mb-1" for="zip">
-                                    ZIP Code
+                                    {{ __('checkout.shipping.zip') }}
                                 </label>
                                 <input wire:model="zip_code"
                                     class="w-full rounded-lg border py-2 px-3
@@ -116,7 +116,7 @@
                         </div>
                     </div>
                     <div class="text-lg font-semibold mb-4 dark:text-white">
-                        Select Payment Method
+                        {{ __('checkout.payment.title') }}
                     </div>
                     <ul class="grid w-full gap-6 md:grid-cols-2">
                         <li>
@@ -134,7 +134,7 @@
                                 for="cod">
                                 <div class="block">
                                     <div class="w-full text-lg font-semibold">
-                                        Cash on Delivery
+                                        {{ __('checkout.payment.cod') }}
                                     </div>
                                 </div>
                                 <svg aria-hidden="true" class="w-5 h-5 ms-3 rtl:rotate-180" fill="none"
@@ -153,7 +153,7 @@
                                 for="card">
                                 <div class="block">
                                     <div class="w-full text-lg font-semibold">
-                                        Card
+                                        {{ __('checkout.payment.card') }}
                                     </div>
                                 </div>
                                 <svg aria-hidden="true" class="w-5 h-5 ms-3 rtl:rotate-180" fill="none"
@@ -173,7 +173,7 @@
                                 for="wallet">
                                 <div class="block">
                                     <div class="w-full text-lg font-semibold">
-                                        Wallet
+                                        {{ __('checkout.payment.wallet') }}
                                     </div>
                                 </div>
                                 <svg aria-hidden="true" class="w-5 h-5 ms-3 rtl:rotate-180" fill="none"
@@ -195,18 +195,18 @@
             <div class="md:col-span-12 lg:col-span-4 col-span-12">
                 <div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900 dark:text-white">
                     <div class="text-xl font-bold underline text-gray-700 dark:text-white mb-2">
-                        ORDER SUMMARY
+                        {{ __('checkout.summary.title') }}
                     </div>
                     <div class="flex justify-between mb-2 font-bold ">
                         <span>
-                            Subtotal
+                            {{ __('checkout.summary.subtotal') }}
                         </span>
                         <span>
                             {{ Number::currency($grand_total, 'EGP') }} </span>
                     </div>
                     <div class="flex justify-between mb-2 font-bold">
                         <span>
-                            Taxes
+                            {{ __('checkout.summary.taxes') }}
                         </span>
                         <span>
                             {{ Number::currency($taxes ?? 0, 'EGP') }} </span>
@@ -214,7 +214,7 @@
                     </div>
                     <div class="flex justify-between mb-2 font-bold">
                         <span>
-                            Shipping Cost
+                            {{ __('checkout.summary.shipping') }}
                         </span>
                         <span>
                             {{ Number::currency($shipping_cost ?? 0, 'EGP') }} </span>
@@ -223,7 +223,7 @@
                     <hr class="bg-slate-400 my-4 h-1 rounded">
                     <div class="flex justify-between mb-2 font-bold">
                         <span>
-                            Grand Total
+                            {{ __('checkout.summary.grand_total') }}
                         </span>
                         <span>
                             {{ Number::currency($grand_total ?? (0 + $shipping_cost ?? (0 + $taxes ?? 0)), 'EGP') }}
@@ -234,31 +234,33 @@
                 </div>
                 <!-- Coupon Code Section -->
                 <div class="bg-white mt-4 rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900 dark:text-white">
-                    <div class="text-lg font-bold text-gray-700 dark:text-white mb-2">Have a Coupon?</div>
+                    <div class="text-lg font-bold text-gray-700 dark:text-white mb-2">
+                        {{ __('checkout.coupon.title') }}
+                    </div>
                     <div class="flex gap-2">
                         <input type="text" wire:model.defer="coupon_code"
                             class="flex-1 rounded-lg border px-3 py-2 dark:bg-gray-700 dark:text-white dark:border-gray-600"
-                            placeholder="Enter coupon code">
+                            placeholder="{{ __('checkout.coupon.placeholder') }}">
                         <button type="button" wire:click="applyCoupon"
                             class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-                            Apply
+                            {{ __('checkout.coupon.apply') }}
                         </button>
                     </div>
                     @if ($coupon_applied)
                         <div class="mt-2 text-green-500 font-semibold">
-                            Coupon applied! You saved {{ $coupon_discount }}%.
+                            {{ __('checkout.coupon.applied') }} {{ $coupon_discount }}%.
                         </div>
                     @elseif($invalid_coupon)
                         <div class="mt-2 text-red-500 font-semibold">
-                            Invalid or expired coupon code.
+                            {{ __('checkout.coupon.invalid') }}
                         </div>
                     @endif
                 </div>
 
                 <button type="submit"
                     class="bg-green-500 mt-4 w-full p-3 rounded-lg text-lg text-white hover:bg-green-600">
-                    <span wire:loading.remove>Place Order</span>
-                    <span wire:loading>Processing...</span>
+                    <span wire:loading.remove>{{ __('checkout.place_order') }}</span>
+                    <span wire:loading>{{ __('checkout.processing') }}</span>
                 </button>
                 @error('stock_error')
                     <div class="mt-2 text-red-600 text-sm font-medium">
@@ -267,7 +269,7 @@
                 @enderror
                 <div class="bg-white mt-4 rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900">
                     <div class="text-xl font-bold underline text-gray-700 dark:text-white mb-2">
-                        BASKET SUMMARY
+                        {{ __('checkout.basket.title') }}
                     </div>
                     <ul class="divide-y divide-gray-200 dark:divide-gray-700" role="list">
                         @foreach ($cart_items as $item)
@@ -283,7 +285,7 @@
                                             {{ $item['name'] }}
                                         </p>
                                         <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                            Quantity: {{ $item['quantity'] }}
+                                            {{ __('checkout.basket.quantity') }}: {{ $item['quantity'] }}
                                         </p>
                                     </div>
                                     <div

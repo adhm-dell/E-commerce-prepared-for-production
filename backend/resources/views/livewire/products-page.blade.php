@@ -158,9 +158,9 @@
                                                 {{ $product->name }}
                                             </h3>
                                         </div>
-                                        <p class="text-lg ">
+                                        <p class="text-lg flex gap-0.5">
                                             <span
-                                                class="@if ($product->discount) line-through mr-0.5 @endif text-green-600 dark:text-green-600">{{ Number::currency($product->price, 'EGP') }}</span>
+                                                class="@if ($product->discount) line-through @endif ltr:mr-2 rtl:ml-2 text-green-600 dark:text-green-600">{{ Number::currency($product->price, 'EGP') }}</span>
                                             @if ($product->discount)
                                                 <span
                                                     class="text-green-600 dark:text-green-600">{{ Number::currency($product->price - $product->discount, 'EGP') }}</span>

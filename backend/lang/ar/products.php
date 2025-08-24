@@ -13,4 +13,7 @@ return [
     'add_to_cart'     => 'أضف إلى السلة',
     'adding'          => 'جاري الإضافة...',
     'unavailable'     => 'غير متاح',
+    'notification'    => [
+        'added_to_cart' => 'تمت إضافة المنتج إلى السلة بنجاح!',
+    ],
 ];

@@ -20,7 +20,7 @@ class Login extends Component
         ]);
 
         if (!Auth::attempt(['email' => $this->email, 'password' => $this->password], true)) {
-            session()->flash('error', 'Invalid credentials.');
+            session()->flash('error', __('login.error'));
             return;
         }
         // Redirect to intended page or home

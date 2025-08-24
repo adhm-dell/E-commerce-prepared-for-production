@@ -81,7 +81,7 @@ class CheckoutPage extends Component
         foreach ($cart_items as $item) {
             $product = Product::find($item['product_id']);
             if (!$product || $product->stock < $item['quantity']) {
-                $this->addError('stock_error', "Product '{$product->name}' is out of stock or insufficient quantity.");
+                $this->addError('stock_error', __('checkout.stock_error', ['product' => $product->name]));
                 return; // وقف العملية
             }
         }

@@ -41,7 +41,7 @@ class AccountPage extends Component
         }
         $user->save();
 
-        session()->flash('success', 'Profile updated successfully!');
+        session()->flash('success', __('account.success'));
     }
 
     public function render()

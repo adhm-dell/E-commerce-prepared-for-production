@@ -7,13 +7,18 @@
                     <table class="w-full">
                         <thead>
                             <tr>
-                                <th class="text-left font-semibold dark:text-gray-200">{{ __('cart.table.product') }}
+                                <th class="ltr:text-left rtl:text-right font-semibold dark:text-gray-200">
+                                    {{ __('cart.table.product') }}
                                 </th>
-                                <th class="text-left font-semibold dark:text-gray-200">{{ __('cart.table.price') }}</th>
-                                <th class="text-left font-semibold dark:text-gray-200">{{ __('cart.table.quantity') }}
+                                <th class="ltr:text-left rtl:text-right font-semibold dark:text-gray-200">
+                                    {{ __('cart.table.price') }}</th>
+                                <th class="ltr:text-left rtl:text-right font-semibold dark:text-gray-200">
+                                    {{ __('cart.table.quantity') }}
                                 </th>
-                                <th class="text-left font-semibold dark:text-gray-200">{{ __('cart.table.total') }}</th>
-                                <th class="text-left font-semibold dark:text-gray-200">{{ __('cart.table.remove') }}
+                                <th class="ltr:text-left rtl:text-right font-semibold dark:text-gray-200">
+                                    {{ __('cart.table.total') }}</th>
+                                <th class="ltr:text-left rtl:text-right font-semibold dark:text-gray-200">
+                                    {{ __('cart.table.remove') }}
                                 </th>
                             </tr>
                         </thead>
@@ -22,9 +27,10 @@
                                 <tr wire:key='{{ $item['product_id'] }}' class="border-b dark:border-gray-700">
                                     <td class="py-4 px-1">
                                         <div class="flex items-center">
-                                            <img class="h-16 w-16 mr-4 rounded bg-gray-100 dark:bg-gray-700"
+                                            <img class="h-16 w-16 ltr:mr-4 rtl:ml-4 rounded bg-gray-100 dark:bg-gray-700"
                                                 src="{{ url('storage', $item['image']) }}" alt="{{ $item['name'] }}">
-                                            <span class="font-semibold dark:text-white">{{ $item['name'] }}</span>
+                                            <span
+                                                class="font-semibold dark:text-white ltr:mr-0.5 rtl:ml-0.5">{{ $item['name'] }}</span>
                                         </div>
                                     </td>
                                     <td class="py-4 px-1 dark:text-gray-200">

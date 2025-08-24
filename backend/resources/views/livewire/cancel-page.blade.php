@@ -4,12 +4,12 @@
             class="justify-center flex-1 max-w-6xl px-4 py-4 mx-auto bg-white border rounded-md dark:border-gray-900 dark:bg-gray-900 md:py-10 md:px-10">
             <div>
                 <h1 class="px-4 text-center text-3xl font-semibold tracking-wide text-red-500 dark:text-gray-300 ">
-                    Payment Failed! Order Cancelled!
+                    {{ __('failed.title') }}
                 </h1>
                 <div class="mt-8 flex justify-center">
                     <a href="/products"
                         class="inline-block px-6 py-2 text-white bg-red-500 hover:bg-red-600 rounded shadow transition-all duration-200">
-                        Try To Order Again: Go To Products Page
+                        {{ __('failed.try_again') }}
                     </a>
                 </div>
             </div>

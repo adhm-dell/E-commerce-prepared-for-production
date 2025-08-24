@@ -13,4 +13,7 @@ return [
     'add_to_cart'     => 'Add to Cart',
     'adding'          => 'Adding...',
     'unavailable'     => 'Unavailable',
+    'notification'    => [
+        'added_to_cart' => 'Product Added to Cart Successfully!',
+    ],
 ];

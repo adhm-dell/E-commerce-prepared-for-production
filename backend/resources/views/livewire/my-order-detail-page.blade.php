@@ -1,5 +1,5 @@
 <div class="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">
-    <h1 class="text-4xl font-bold text-slate-500">Order Details</h1>
+    <h1 class="text-4xl font-bold text-slate-500">{{ __('order_detail.order_details') }}</h1>
 
     <!-- Grid -->
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-5">
@@ -21,7 +21,7 @@
                 <div class="grow">
                     <div class="flex items-center gap-x-2">
                         <p class="text-xs uppercase tracking-wide text-gray-500">
-                            Customer
+                            {{ __('order_detail.customer') }}
                         </p>
                     </div>
                     <div class="mt-1 flex items-center gap-x-2 dark:text-white">
@@ -51,7 +51,7 @@
                 <div class="grow">
                     <div class="flex items-center gap-x-2">
                         <p class="text-xs uppercase tracking-wide text-gray-500">
-                            Order Date
+                            {{ __('order_detail.order_date') }}
                         </p>
                     </div>
                     <div class="mt-1 flex items-center gap-x-2">
@@ -82,22 +82,35 @@
                     @php
                         $status = '';
                         if ($order->status == 'new') {
-                            $status = '<span class="bg-blue-500 py-1 px-3 rounded text-white shadow">New</span>';
+                            $status =
+                                '<span class="bg-blue-500 py-1 px-3 rounded text-white shadow">' .
+                                __('order_detail.status_new') .
+                                '</span>';
                         } elseif ($order->status == 'processing') {
                             $status =
-                                '<span class="bg-yellow-500 py-1 px-3 rounded text-white shadow">Processing</span>';
+                                '<span class="bg-yellow-500 py-1 px-3 rounded text-white shadow">' .
+                                __('order_detail.status_processing') .
+                                '</span>';
                         } elseif ($order->status == 'delivered') {
-                            $status = '<span class="bg-green-500 py-1 px-3 rounded text-white shadow">Delivered</span>';
+                            $status =
+                                '<span class="bg-green-500 py-1 px-3 rounded text-white shadow">' .
+                                __('order_detail.status_delivered') .
+                                '</span>';
                         } elseif ($order->status == 'cancelled') {
-                            $status = '<span class="bg-red-500 py-1 px-3 rounded text-white shadow">Cancelled</span>';
+                            $status =
+                                '<span class="bg-red-500 py-1 px-3 rounded text-white shadow">' .
+                                __('order_detail.status_cancelled') .
+                                '</span>';
                         } elseif ($order->status == 'shipped') {
-                            $status = '<span class="bg-blue-500 py-1 px-3 rounded text-white shadow">Shipped</span>';
+                            $status =
+                                '<span class="bg-blue-500 py-1 px-3 rounded text-white shadow">' .
+                                __('order_detail.status_shipped') .
+                                '</span>';
                         }
-
                     @endphp
                     <div class="flex items-center gap-x-2">
                         <p class="text-xs uppercase tracking-wide text-gray-500">
-                            Order Status
+                            {{ __('order_detail.order_status') }}
                         </p>
                     </div>
                     <div class="mt-1 flex items-center gap-x-2">
@@ -129,18 +142,24 @@
                         $payment_status = '';
                         if ($order->payment_status == 'paid') {
                             $payment_status =
-                                '<span class="bg-green-500 py-1 px-3 rounded text-white shadow">Paid</span>';
+                                '<span class="bg-green-500 py-1 px-3 rounded text-white shadow">' .
+                                __('order_detail.payment_paid') .
+                                '</span>';
                         } elseif ($order->payment_status == 'failed') {
                             $payment_status =
-                                '<span class="bg-red-500 py-1 px-3 rounded text-white shadow">Failed</span>';
+                                '<span class="bg-red-500 py-1 px-3 rounded text-white shadow">' .
+                                __('order_detail.payment_failed') .
+                                '</span>';
                         } elseif ($order->payment_status == 'pending') {
                             $payment_status =
-                                '<span class="bg-yellow-500 py-1 px-3 rounded text-white shadow">Pending</span>';
+                                '<span class="bg-yellow-500 py-1 px-3 rounded text-white shadow">' .
+                                __('order_detail.payment_pending') .
+                                '</span>';
                         }
                     @endphp
                     <div class="flex items-center gap-x-2">
                         <p class="text-xs uppercase tracking-wide text-gray-500">
-                            Payment Status
+                            {{ __('order_detail.payment_status') }}
                         </p>
                     </div>
                     <div class="mt-1 flex items-center gap-x-2">
@@ -158,10 +177,11 @@
                 <table class="w-full dark:text-white">
                     <thead>
                         <tr>
-                            <th class="text-left font-semibold">Product</th>
-                            <th class="text-left font-semibold">Price</th>
-                            <th class="text-left font-semibold">Quantity</th>
-                            <th class="text-left font-semibold">Total</th>
+                            <th class="ltr:text-left rtl:text-right font-semibold">{{ __('order_detail.product') }}</th>
+                            <th class="ltr:text-left rtl:text-right font-semibold">{{ __('order_detail.price') }}</th>
+                            <th class="ltr:text-left rtl:text-right font-semibold">{{ __('order_detail.quantity') }}
+                            </th>
+                            <th class="ltr:text-left rtl:text-right font-semibold">{{ __('order_detail.total') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -170,7 +190,8 @@
                             <tr wire:key="{{ $item->id }}">
                                 <td class="py-4">
                                     <div class="flex items-center">
-                                        <img class="h-16 w-16 mr-4" src="{{ url('storage', $item->product->image[0]) }}"
+                                        <img class="h-16 w-16 ltr:mr-4 rtl:ml-4"
+                                            src="{{ url('storage', $item->product->image[0]) }}"
                                             alt="{{ $item->product->name }}">
                                         <span class="font-semibold">{{ $item->product->name }}</span>
                                     </div>
@@ -188,14 +209,14 @@
 
             <div
                 class="bg-white overflow-x-auto rounded-lg shadow-md p-6 mb-4 dark:bg-slate-900 dark:border-gray-800 dark:text-white">
-                <h1 class="font-3xl font-bold text-slate-500 mb-3">Shipping Address</h1>
+                <h1 class="font-3xl font-bold text-slate-500 mb-3">{{ __('order_detail.shipping_address') }}</h1>
                 <div class="flex justify-between items-center">
                     <div>
                         <p>{{ $address->street_address }}, {{ $address->city }}, {{ $address->state }},
                             {{ $address->zip_code }}</p>
                     </div>
                     <div>
-                        <p class="font-semibold">Phone:</p>
+                        <p class="font-semibold">{{ __('order_detail.phone') }}:</p>
                         <p>{{ $address->phone }}</p>
                     </div>
                 </div>
@@ -204,22 +225,22 @@
         </div>
         <div class="md:w-1/4">
             <div class="bg-white rounded-lg shadow-md p-6 dark:bg-slate-900 dark:border-gray-800 dark:text-white">
-                <h2 class="text-lg font-semibold mb-4">Summary</h2>
+                <h2 class="text-lg font-semibold mb-4">{{ __('order_detail.summary') }}</h2>
                 <div class="flex justify-between mb-2">
-                    <span>Subtotal</span>
+                    <span>{{ __('order_detail.subtotal') }}</span>
                     <span>{{ Number::currency($order->grand_total, 'EGP') }}</span>
                 </div>
                 <div class="flex justify-between mb-2">
-                    <span>Taxes</span>
+                    <span>{{ __('order_detail.taxes') }}</span>
                     <span>{{ Number::currency(0, 'EGP') }}</span>
                 </div>
                 <div class="flex justify-between mb-2">
-                    <span>Shipping</span>
+                    <span>{{ __('order_detail.shipping') }}</span>
                     <span>{{ Number::currency(0, 'EGP') }}</span>
                 </div>
                 <hr class="my-2">
                 <div class="flex justify-between mb-2">
-                    <span class="font-semibold">Grand Total</span>
+                    <span class="font-semibold">{{ __('order_detail.grand_total') }}</span>
                     <span class="font-semibold">{{ Number::currency($order->grand_total, 'EGP') }}</span>
                 </div>
 
