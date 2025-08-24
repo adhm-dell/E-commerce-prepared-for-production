@@ -35,12 +35,15 @@ class CategoryResource extends Resource
                 Section::make([
                     Grid::make()
                         ->schema([
-                            Forms\Components\TextInput::make('name')
+                            Forms\Components\TextInput::make('name_en')
                                 ->required()
                                 ->maxLength(255)
                                 ->live(onBlur: true)
                                 ->afterStateUpdated(fn(string $operation, Set $set, $state) =>
                                 $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                            Forms\Components\TextInput::make('name_ar')
+                                ->required()
+                                ->maxLength(255),
 
                             Forms\Components\TextInput::make('slug')
                                 ->required()

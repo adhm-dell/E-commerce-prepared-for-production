@@ -40,19 +40,25 @@ class ProductResource extends Resource
             ->schema([
                 Group::make()->schema([
                     Section::make('Product Information')->schema([
-                        TextInput::make('name')
+                        TextInput::make('name_en')
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
                             ->afterStateUpdated(fn(string $operation, Forms\Set $set, $state) =>
                             $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                        TextInput::make('name_ar')
+                            ->required()
+                            ->maxLength(255),
                         TextInput::make('slug')
                             ->required()
                             ->maxLength(255)
                             ->disabled()
                             ->dehydrated()
                             ->unique(Product::class, 'slug', ignoreRecord: true),
-                        MarkdownEditor::make('description')
+                        MarkdownEditor::make('description_en')
+                            ->columnSpanFull()
+                            ->fileAttachmentsDirectory('products'),
+                        MarkdownEditor::make('description_ar')
                             ->columnSpanFull()
                             ->fileAttachmentsDirectory('products')
 
@@ -85,12 +91,12 @@ class ProductResource extends Resource
                     Section::make('Associations')->schema([
                         Forms\Components\Select::make('category_id')
                             ->preload()
-                            ->relationship('category', 'name')
+                            ->relationship('category', 'name_en')
                             ->required()
                             ->searchable(),
                         Forms\Components\Select::make('brand_id')
                             ->preload()
-                            ->relationship('brand', 'name')
+                            ->relationship('brand', 'name_en')
                             ->required()
                             ->searchable(),
                         TextInput::make('stock')
@@ -147,11 +153,11 @@ class ProductResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('category')
-                    ->relationship('category', 'name')
+                    ->relationship('category', 'name_en')
                     ->preload()
                     ->searchable(),
                 SelectFilter::make('brand')
-                    ->relationship('brand', 'name')
+                    ->relationship('brand', 'name_en')
                     ->preload()
                     ->searchable(),
             ])

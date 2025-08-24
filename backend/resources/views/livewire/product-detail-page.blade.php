@@ -8,7 +8,7 @@
                             @if (!$product->in_stock || $product->stock <= 0)
                                 <div
                                     class="absolute top-2 left-2 bg-red-600 text-white text-xl font-bold px-2 py-1 rounded shadow z-10">
-                                    Out of Stock
+                                    {{ __('product_detail.out_of_stock') }}
                                 </div>
                             @endif
                             <img x-bind:src="mainImage" alt="" class="object-cover w-full lg:h-full ">
@@ -24,7 +24,7 @@
 
                         </div>
                         <div class="px-6 pb-6 mt-6 border-t border-gray-300 dark:border-gray-400 ">
-                            <div class="flex flex-wrap items-center mt-6">
+                            {{-- <div class="flex flex-wrap items-center mt-6">
                                 <span class="mr-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                         fill="currentColor" class="w-4 h-4 text-gray-700 dark:text-gray-400 bi bi-truck"
@@ -35,7 +35,7 @@
                                     </svg>
                                 </span>
                                 <h2 class="text-lg font-bold text-gray-700 dark:text-gray-400">Free Shipping</h2>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                         </div>
                         <div class="w-32 mb-8 ">
                             <label for=""
-                                class="w-full pb-1 text-xl font-semibold text-gray-700 border-b border-blue-300 dark:border-gray-600 dark:text-gray-400">Quantity</label>
+                                class="w-full pb-1 text-xl font-semibold text-gray-700 border-b border-blue-300 dark:border-gray-600 dark:text-gray-400">{{ __('product_detail.quantity') }}</label>
                             <div class="relative flex flex-row w-full h-10 mt-6 bg-transparent rounded-lg">
                                 <button wire:click='decrementQuantity'
                                     class="w-20 h-full text-gray-600 bg-gray-300 rounded-l outline-none cursor-pointer  dark:text-gray-400 hover:text-gray-700 dark:bg-gray-900 hover:bg-gray-400 dark:hover:text-gray-400 dark:hover:bg-gray-700">
@@ -78,14 +78,15 @@
                             @if ($product->in_stock && $product->stock > 0)
                                 <button wire:click='addToCart({{ $product->id }})'
                                     class="w-full p-4 bg-blue-500 rounded-md lg:w-2/5 dark:text-gray-200 text-gray-50 hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-700">
-                                    <span wire:loading.remove wire:target='addToCart({{ $product->id }})'>Add to
-                                        cart</span>
-                                    <span wire:loading wire:target='addToCart({{ $product->id }})'>Adding...</span>
+                                    <span wire:loading.remove
+                                        wire:target='addToCart({{ $product->id }})'>{{ __('product_detail.add_to_cart') }}</span>
+                                    <span wire:loading
+                                        wire:target='addToCart({{ $product->id }})'>{{ __('product_detail.adding') }}</span>
                                 </button>
                             @else
                                 <button disabled
                                     class="w-full p-4 bg-gray-400 cursor-not-allowed rounded-md lg:w-2/5 text-gray-100 dark:text-gray-300 dark:bg-gray-700">
-                                    Out of Stock
+                                    {{ __('product_detail.out_of_stock') }}
                                 </button>
                             @endif
                         </div>

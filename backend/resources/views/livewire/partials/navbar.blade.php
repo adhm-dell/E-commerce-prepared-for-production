@@ -5,7 +5,7 @@
             <div class="flex items-center justify-between">
                 <a class="flex w-[10rem] text-xl font-bold dark:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                     href="/" aria-label="Brand">
-                    <img src="{{ asset('favicon.png') }}" alt="Logo" class="w-8 h-8 mr-1.5">
+                    <img src="{{ asset('favicon.png') }}" alt="Logo" class="w-8 h-8 ltr:mr-1.5 rtl:ml-1.5">
                     FR3ON GYM
                 </a>
 

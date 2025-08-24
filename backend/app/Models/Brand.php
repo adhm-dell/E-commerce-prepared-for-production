@@ -10,7 +10,8 @@ class Brand extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'name_en',
+        'name_ar',
         'slug',
         'image',
         'is_active',
@@ -20,6 +21,14 @@ class Brand extends Model
     protected $casts = [
         'is_active' => 'boolean'
     ];
+
+    // ✅ Accessor to return name based on locale
+    protected $appends = ['name'];
+
+    public function getNameAttribute()
+    {
+        return app()->getLocale() === 'ar' ? $this->name_ar : $this->name_en;
+    }
 
     public function products()
     {

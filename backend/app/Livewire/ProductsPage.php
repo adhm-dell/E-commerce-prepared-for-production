@@ -114,8 +114,8 @@ class ProductsPage extends Component
 
         return view('livewire.products-page', [
             'products' => $productsQuery->paginate(6),
-            'brands' => Brand::where('is_active', 1)->get(['id', 'name', 'slug']),
-            'categories' => Category::where('is_active', 1)->get(['id', 'name', 'slug']),
+            'brands' => Brand::where('is_active', 1)->get(['id', 'name_en', 'name_ar', 'slug']),
+            'categories' => Category::where('is_active', 1)->get(['id', 'name_en', 'name_ar', 'slug']),
         ]);
     }
 }
